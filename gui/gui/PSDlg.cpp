@@ -53,6 +53,8 @@ BOOL PSDlg::OnInitDialog()
 
 BEGIN_MESSAGE_MAP(PSDlg, CDialogEx)
 	ON_NOTIFY(LVN_ITEMCHANGED, IDC_PSLISTBOX, &PSDlg::OnLvnItemchangedPslistbox)
+	ON_BN_CLICKED(IDCLOSE, &PSDlg::OnBnClickedClose)
+	ON_BN_CLICKED(IDOK, &PSDlg::OnBnClickedOk)
 END_MESSAGE_MAP()
 
 
@@ -63,4 +65,40 @@ void PSDlg::OnLvnItemchangedPslistbox(NMHDR *pNMHDR, LRESULT *pResult)
 	LPNMLISTVIEW pNMLV = reinterpret_cast<LPNMLISTVIEW>(pNMHDR);
 	// TODO: 여기에 컨트롤 알림 처리기 코드를 추가합니다.
 	*pResult = 0;
+}
+
+
+void PSDlg::OnBnClickedOk()
+{
+	// TODO: 여기에 컨트롤 알림 처리기 코드를 추가합니다.
+	if(!g_mydebugger.Get_ExecConfig(0)) {
+		// Single Step
+		DWORD g_SelectedItem = LBset1.GetNextItem(-1, LVNI_SELECTED);
+		if(g_SelectedItem<0) {
+			AfxMessageBox("Please select process");
+		}
+		else {
+			DWORD SelectedCount = LBset1.GetSelectedCount();
+			if(SelectedCount == 1) {	// 단일 선택
+				CString m_liststr = LBset1.GetItemText(g_SelectedItem, 0);
+				g_mydebugger.Attach_Process(strtol(m_liststr, NULL, 10));
+			} else if(SelectedCount == 0) {
+				AfxMessageBox("Please select process");
+			} else {		// 다중 선택
+				AfxMessageBox("Please select only one.");
+			}
+		}
+	}
+	else {
+		AfxMessageBox("It is already running.");
+	}
+
+	CDialogEx::OnOK();
+}
+
+
+void PSDlg::OnBnClickedClose()
+{
+	// TODO: 여기에 컨트롤 알림 처리기 코드를 추가합니다.
+	CDialogEx::OnOK();		// 그냥 아무것도 안 하고 창 종료
 }

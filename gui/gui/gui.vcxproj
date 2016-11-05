@@ -103,11 +103,13 @@
     <None Include="res\gui.rc2" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Break_Point.h" />
     <ClInclude Include="debugger.h" />
     <ClInclude Include="Disassem.h" />
     <ClInclude Include="gui.h" />
     <ClInclude Include="guiDlg.h" />
     <ClInclude Include="PE_header.h" />
+    <ClInclude Include="PE_viewer.h" />
     <ClInclude Include="PSDlg.h" />
     <ClInclude Include="Resource.h" />
     <ClInclude Include="stdafx.h" />
@@ -115,11 +117,13 @@
     <ClInclude Include="Timeless.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="Break_Point.cpp" />
     <ClCompile Include="debugger.cpp" />
     <ClCompile Include="Disassem.cpp" />
     <ClCompile Include="gui.cpp" />
     <ClCompile Include="guiDlg.cpp" />
     <ClCompile Include="PE_header.cpp" />
+    <ClCompile Include="PE_viewer.cpp" />
     <ClCompile Include="PSDlg.cpp" />
     <ClCompile Include="stdafx.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>

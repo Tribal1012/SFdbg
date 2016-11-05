@@ -7,15 +7,13 @@
 #include "Timeless.h"
 
 time_t time_old, time_now;	//실행시간 측정을 위해 사용
-unsigned g_tcount=0;
+unsigned int g_tcount=0;
 
 namespace SFdbg {
 	DEBUGGER g_mydebugger;
 
 	DEBUGGER::DEBUGGER()
 	{
-		memset(g_bp_table, NULL, sizeof(BREAKPOINT_TABLE)*1024);
-		g_bp_table_count = 0;
 		g_count = 0;
 		g_exec.isopened = FALSE;
 		g_exec.isrun = FALSE;
@@ -36,8 +34,9 @@ namespace SFdbg {
 	//oepn process
 	BOOL DEBUGGER::Open_Process(CString filename, CString filepath)
 	{
-		strcpy(g_filepath, filepath.GetBuffer(0));	//convert from CString to LPSTR
-		strcpy(g_cmdline, filename.GetBuffer(0));
+		ResetAll();
+		strcpy_s(g_filepath, filepath.GetBuffer(0));	//convert from CString to LPSTR
+		strcpy_s(g_cmdline, filename.GetBuffer(0));
 		memset(g_cmdline, 0, MAX_PATH);
 		if(CreateProcess(g_filepath, (LPSTR)g_cmdline, NULL, NULL, FALSE, CREATE_NEW_CONSOLE | DEBUG_ONLY_THIS_PROCESS, NULL, NULL, &si, &pi))
 		{
@@ -62,6 +61,7 @@ namespace SFdbg {
 		DWORD dwSize;
 		int i = 0;
 
+		ResetAll();
 		pe32.dwSize = sizeof(PROCESSENTRY32);
 		hSnapShot = CreateToolhelp32Snapshot(TH32CS_SNAPALL, NULL);		//Get Process Entry
 		Process32First(hSnapShot, &pe32);
@@ -84,8 +84,10 @@ namespace SFdbg {
 		ZeroMemory(g_exec.pid_name, sizeof(MAX_PATH));
 		dwSize = sizeof(g_exec.pid_name)/sizeof(char);
 		QueryFullProcessImageName(hProcess, 0, g_exec.pid_name, &dwSize);		//Get Filename
-		//printf("Name : %s\n", g_exec.pid_name);
 		Init_PE_Format(g_exec.pid_name);
+		AfxMessageBox(g_exec.pid_name);		//Print Filename(Success)
+		g_exec.isopened = FALSE;
+		g_exec.attached = TRUE;
 
 		return TRUE;
 	}
@@ -107,12 +109,12 @@ namespace SFdbg {
 			lItem.iItem=i;
 			lItem.iSubItem=0;
 
-			sprintf(szText, "%u", i+1);
+			sprintf_s(szText, "%u", i+1);
 			lItem.pszText=(LPSTR)szText;
 			LBset->InsertItem(&lItem);
 
 			lItem.iSubItem=1;
-			sprintf(szText, "%s", pe32.szExeFile);
+			sprintf_s(szText, "%s", pe32.szExeFile);
 			lItem.pszText=(LPSTR)szText;
 			LBset->SetItem(&lItem);
 
@@ -147,27 +149,31 @@ namespace SFdbg {
 		conbuffer[14]=g_context.SegFs;
 		conbuffer[15]=g_context.SegGs;
 		if(Modify) {
-			for(index=0; index<16; index++) 
-				m_list->DeleteItem(0);		// 0번을 지우면 하나씩 올라오기 때문
-		}
+			for(index=0; index<16; index++) {
+				//m_list->DeleteItem(0);		// 0번을 지우면 하나씩 올라오기 때문
+				memset(szText, 0, MAX_PATH);
+				sprintf_s(szText, "0x%08x", conbuffer[index]);
+				m_list->SetItem(index, 1, LVIF_TEXT, szText, NULL, NULL, NULL, NULL, NULL);
+			}
+		} else {
+			index=0;
+			lItem.mask=LVIF_TEXT;
+			while(index<16) {
+				lItem.iItem=index;
+				lItem.iSubItem=0;
 
-		index=0;
-		lItem.mask=LVIF_TEXT;
-		while(index<16) {
-			lItem.iItem=index;
-			lItem.iSubItem=0;
+				memset(szText, 0, MAX_PATH);
+				sprintf_s(szText, "%-10s", regbuffer[index]);
+				lItem.pszText=(LPSTR)szText;
+				m_list->InsertItem(&lItem);
 
-			memset(szText, 0, MAX_PATH);
-			sprintf(szText, "%-10s", regbuffer[index]);
-			lItem.pszText=(LPSTR)szText;
-			m_list->InsertItem(&lItem);
+				lItem.iSubItem=1;
+				sprintf_s(szText, "0x%08x", conbuffer[index]);
+				lItem.pszText=(LPSTR)szText;
+				m_list->SetItem(&lItem);
 
-			lItem.iSubItem=1;
-			sprintf(szText, "0x%08x", conbuffer[index]);
-			lItem.pszText=(LPSTR)szText;
-			m_list->SetItem(&lItem);
-
-			index++;
+				index++;
+			}
 		}
 	}
 	void DEBUGGER::Timeless(CListCtrl* m_list4)
@@ -182,13 +188,13 @@ namespace SFdbg {
 		lItem.iSubItem=0;
 
 		memset(szText, 0, MAX_PATH);
-		sprintf(szText, "%x", time_now-time_old);
+		sprintf_s(szText, "%x", time_now-time_old);
 		lItem.pszText=(LPSTR)szText;
 		m_list4->InsertItem(&lItem);
 
 		for(int i=1;i<12; i++) {
 			lItem.iSubItem=i;
-			sprintf(szText, "0x%08x", conbuffer[i]);
+			sprintf_s(szText, "0x%08x", conbuffer[i-1]);
 			lItem.pszText=(LPSTR)szText;
 			m_list4->SetItem(&lItem);
 		}
@@ -212,11 +218,11 @@ namespace SFdbg {
 			lItem.iSubItem=0;
 
 			memset(szText, 0, MAX_PATH);
-			sprintf(szText, "%p", (void*)((DWORD)base_address+(i*0x10)));
+			sprintf_s(szText, "%p", (void*)((DWORD)base_address+(i*0x10)));
 			lItem.pszText=(LPSTR)szText;
 			m_list->InsertItem(&lItem);
 
-			sprintf(szText, "0x%08x", 0x0);
+			sprintf_s(szText, "0x%08x", 0x0);
 			lItem.pszText=(LPSTR)szText;		//값 초기화
 			for(int j=1; j<5; j++) {
 				lItem.iSubItem=j;
@@ -233,41 +239,29 @@ namespace SFdbg {
 		void* Align_Esp = (void*)((DWORD)g_context.Esp-Stack_Offset2(g_context.Esp, base_address));
 		DWORD checksize = 0;
 		BOOL ReadWrite_result = FALSE;
-		unsigned int i=0;
-		LVITEM lItem;
 		LVFINDINFO lfi;
+		DWORD row = 0, column = 0;
 
 		ReadWrite_result = ReadProcessMemory(hProcess, (LPCVOID)Align_Esp, buffer, memsize, &checksize);
 		if((checksize == memsize)&&(ReadWrite_result == TRUE))
 		{
 			lfi.flags = LVFI_STRING;
-			sprintf(szText, "%p", Align_Esp);
+			sprintf_s(szText, "%p", Align_Esp);
 			lfi.psz = szText;
-			i = m_list->FindItem(&lfi, 1);//Stack_Offset1(g_context.Esp, base_address);
-
-			lItem.mask=LVIF_TEXT;
-			lItem.iItem=i;
-			lItem.iSubItem=0;
-			m_list->DeleteItem(lItem.iItem);
-
+			//Stack_Offset1(g_context.Esp, base_address);
+			
+			row = m_list->FindItem(&lfi, -1);
+			column = 1 + (Stack_Offset2(g_context.Esp, base_address)/4);
+			
 			memset(szText, 0, MAX_PATH);
-			sprintf(szText, "%p", (void*)Align_Esp);
-			lItem.pszText=(LPSTR)szText;
-			m_list->InsertItem(&lItem);
-
-			for(int j=0; j<4; j++) {
-				lItem.iSubItem=j+1;
-				sprintf(szText, "0x%08x", (DWORD)*(buffer+(j*4)));
-				lItem.pszText=(LPSTR)szText;
-				m_list->SetItem(&lItem);
-			}
-
-			i+=4;
+			sprintf_s(szText, "0x%08x", (DWORD)*buffer);
+			m_list->SetItem(row, column, LVIF_TEXT, szText, NULL, NULL, NULL, NULL, NULL);
+			//m_list->DeleteItem(lItem.iItem);
 		}
 	}
 	
 	//Configure Software BreakPonint	중요
-	BOOL DEBUGGER::Set_SoftBreakPoint(DWORD address)
+	BOOL DEBUGGER::Set_SoftBreakPoint(DWORD address, PDWORD opcode)
 	{
 		MEMORY_BASIC_INFORMATION mbi;
 		MEMORY_BASIC_INFORMATION temp_mbi;
@@ -275,66 +269,58 @@ namespace SFdbg {
 		BOOL ReadWrite_result;
 		BYTE break_opcode = BREAK_POINT;
 
-		ReadWrite_result = ReadProcessMemory(hProcess, (LPCVOID)address, &g_bp_table[g_bp_table_count].opcode, 1, &checksize);
+		ReadWrite_result = ReadProcessMemory(hProcess, (LPCVOID)address, opcode, 1, &checksize);
 		if((checksize != 1)||(ReadWrite_result != 1))
 		{
-			g_bp_table[g_bp_table_count].opcode = NULL;
+			*opcode = NULL;
 			return FALSE;
 		}
 		VirtualQueryEx(hProcess, (LPCVOID)g_context.Eip, &mbi, sizeof(MEMORY_BASIC_INFORMATION));
 	    if (!VirtualProtectEx(hProcess, mbi.BaseAddress, mbi.RegionSize, PAGE_EXECUTE_READWRITE, &mbi.Protect))
 	    {
-	    	g_bp_table[g_bp_table_count].opcode = NULL;
+	    	*opcode = NULL;
 	        return FALSE ;
 	    }
-		g_bp_table[g_bp_table_count].Eip = g_context.Eip;
-		break_opcode = BREAK_POINT;
+		//g_bp_table[g_bp_table_count].Eip = g_context.Eip;
 		ReadWrite_result = WriteProcessMemory(hProcess, (LPVOID)address, (LPCVOID)&break_opcode, 1, &checksize);
 		if((checksize != 1)||(ReadWrite_result != 1))
 		{
-			g_bp_table[g_bp_table_count].opcode = NULL;
+			*opcode = NULL;
 			return FALSE;
 		}
 		if (!VirtualProtectEx(hProcess, mbi.BaseAddress, mbi.RegionSize, mbi.Protect, &temp_mbi.Protect))
 	    {
-	    	g_bp_table[g_bp_table_count].opcode = NULL;
+	    	*opcode = NULL;
 	        return FALSE ;
 	    }
 	    FlushInstructionCache(hProcess, mbi.BaseAddress, 1);
-		g_bp_table_count++;
 		return TRUE;
 	}
 	//Delete Software BreakPonint
-	BOOL DEBUGGER::Delete_SoftBreakPoint(DWORD address)
+	BOOL DEBUGGER::Delete_SoftBreakPoint(DWORD address, PDWORD opcode)
 	{
 		MEMORY_BASIC_INFORMATION mbi;
 		MEMORY_BASIC_INFORMATION temp_mbi;
 		DWORD checksize = 0;
 		BOOL ReadWrite_result = FALSE;
 		VirtualQueryEx(hProcess, (LPCVOID)address, &mbi, sizeof(MEMORY_BASIC_INFORMATION));
-	    if (!VirtualProtectEx(hProcess, mbi.BaseAddress, mbi.RegionSize, PAGE_EXECUTE_READWRITE, &mbi.Protect))
+	    if(!VirtualProtectEx(hProcess, mbi.BaseAddress, mbi.RegionSize, PAGE_EXECUTE_READWRITE, &mbi.Protect))
 	    {
-	    	g_bp_table[g_bp_table_count].opcode = NULL;
-	        return FALSE ;
+	        return FALSE;
 	    }
-		WriteProcessMemory(hProcess, (LPVOID)address, &g_bp_table[g_bp_table_count].opcode, 1, &checksize);
+		WriteProcessMemory(hProcess, (LPVOID)address, opcode, 1, &checksize);
 		if((checksize != 1)||(ReadWrite_result != 1))
 		{
-			g_bp_table[g_bp_table_count].opcode = NULL;
 			return FALSE;
 		}
-		g_bp_table[g_bp_table_count].Eip = 0;
-		if (!VirtualProtectEx(hProcess, mbi.BaseAddress, mbi.RegionSize, mbi.Protect, &temp_mbi.Protect))
+		if(!VirtualProtectEx(hProcess, mbi.BaseAddress, mbi.RegionSize, mbi.Protect, &temp_mbi.Protect))
 	    {
-	    	g_bp_table[g_bp_table_count].opcode = NULL;
 	        return FALSE ;
 	    }
 		//BreakPoint로 EIP 설정
 		FlushInstructionCache(hProcess, mbi.BaseAddress, 1);
-		g_context.Eip-- ;
         if (!SetThreadContext(hThread,&g_context))
             return FALSE;
-        g_bp_table_count--;
 		return TRUE;
 	}
 	BOOL DEBUGGER::Set_SingleStep()
@@ -370,7 +356,6 @@ namespace SFdbg {
 
 		if(WaitForDebugEvent(&g_de, 100) == NULL)
 		{
-			//puts("Don't Start Debug Event");
 			return TRUE;
 		}
 		switch(g_de.dwDebugEventCode)
@@ -384,13 +369,13 @@ namespace SFdbg {
 			g_mydebugger.View_Register(m_list2, FALSE);
 			g_mydebugger.Print_Stack(m_list5);
 			g_mydebugger.Timeless(m_list4);
-			Init_Disassemble((const unsigned char*)g_pf.psa[1].shdata, (const DWORD)g_pf.psa[1].psh.SizeOfRawData, m_list1);
-			Set_SoftBreakPoint(g_context.Eip);
+			Init_Disassemble(g_context.Eip, 1000, m_list1);
+			//Init_Disassemble((const unsigned char*)g_pf.psa[1].shdata, (const DWORD)g_pf.psa[1].psh.SizeOfRawData, m_list1);
 			break;
 		//Exit Process
 		case EXIT_PROCESS_DEBUG_EVENT:		//5
-			/*if(g_exec.attached)
-				DebugActiveProcessStop(g_exec.pid);*/
+			Destroy_PE_Format();
+			ResetAll();
 			return FALSE;
 		//Occur Debug Exception
 		case EXCEPTION_DEBUG_EVENT:			//1
@@ -402,7 +387,9 @@ namespace SFdbg {
 				GetThreadContext(hThread, &g_context);	//Setting Register
 				time(&time_now);	//현재 시간 카운트
 				g_mydebugger.View_Register(m_list2, TRUE);					//추가에서 수정으로 변경
-				g_mydebugger.Modify_Stack(m_list5, 0x10);
+				g_mydebugger.Modify_Stack(m_list5, 0x4);
+				g_mydebugger.Timeless(m_list4);
+				//Init_Disassemble(g_context.Eip-100, 1000, m_list1);
 				//input_table(g_context, (time_now-time_old));
 
 				Set_SingleStep();
@@ -413,7 +400,9 @@ namespace SFdbg {
 				GetThreadContext(hThread, &g_context);
 				time(&time_now);	//현재 시간 카운트
 				g_mydebugger.View_Register(m_list2, TRUE);					//추가에서 수정으로 변경
-				g_mydebugger.Modify_Stack(m_list5, 0x10);
+				g_mydebugger.Modify_Stack(m_list5, 0x4);
+				g_mydebugger.Timeless(m_list4);
+				Init_Disassemble(g_context.Eip, 1000, m_list1);
 				//input_table(g_context, (time_now-time_old));
 
 				Set_SingleStep();
@@ -453,5 +442,15 @@ namespace SFdbg {
 		}
 
 		return FALSE;
+	}
+
+	void DEBUGGER::ResetAll(void) {
+		if(g_exec.attached) {
+			DebugActiveProcessStop(g_exec.pid);
+		}
+		if(g_exec.isopened) {
+			CloseHandle(pi.hProcess);
+		}
+		memset(&g_mydebugger, 0, sizeof(DEBUGGER));
 	}
 }

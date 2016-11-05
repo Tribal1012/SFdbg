@@ -1,7 +1,8 @@
 #pragma once
 #include "afxwin.h"
 #include "afxcmn.h"
-
+#include "guiDlg.h"
+#include "debugger.h"
 
 // PSDlg 대화 상자입니다.
 
@@ -27,4 +28,6 @@ protected:
 public:
 	afx_msg void OnLvnItemchangedPslistbox(NMHDR *pNMHDR, LRESULT *pResult);
 	CListCtrl LBset1;
+	afx_msg void OnBnClickedClose();
+	afx_msg void OnBnClickedOk();
 };

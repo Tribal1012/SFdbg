@@ -32,6 +32,7 @@ int Set_IF_IMM(const BYTE bit,unsigned char* psmBase);
 int Set_ARPL_DIS(const BYTE modrm, unsigned char* psmBase);
 unsigned char* Disassemble(const BYTE Code, unsigned char* psmBase);
 BOOL Init_Disassemble(const unsigned char* psmBase, const DWORD smSize, CListCtrl* m_list);
+BOOL Init_Disassemble(const DWORD Base, const DWORD count, CListCtrl* m_list);
 void Reset_iif(void);
 
 //

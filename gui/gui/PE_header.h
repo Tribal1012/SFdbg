@@ -306,15 +306,26 @@ typedef struct _PE_Format {
 
 #define SAFE_FREE(a) if(a){free(a); a=NULL;}
 
-void Print_DOS_Header(const PDOS_HEADER pidh);
-void Print_FILE_Header(const PFILE_HEADER pfh);
-void Print_OPTIONAL_Header(const POPTIONAL_HEADER poh);
-void Print_NT_Header(const PNT_HEADERS pnh);
-void Print_SECTION_Header(const PSECTION_HEADER psh);
+void Print_DOS_Header(CListCtrl *pelist);
+DWORD Print_FILE_Header(CListCtrl *pelist, const DWORD row);
+DWORD Print_DATA_DIRECTORY(CListCtrl *pelist, const DWORD row);
+DWORD Print_OPTIONAL_Header(CListCtrl *pelist, const DWORD row);
+void Print_NT_Header(CListCtrl *pelist);
+void Print_SECTION_Header(CListCtrl *pelist);
 BOOL Get_PE_Format(const char* temp_mem);	// PE Format 정보를 획득
 BOOL Init_PE_Format(const char* pe_file);	// 프로그램 시작시 호출
 BOOL Destroy_PE_Format(void);				// Exit시 호출
 
 extern PE_Format g_pf;
 
+#define IDH(x) g_pf.idh.x
+#define RES(x,y) g_pf.idh.x[y]
+#define INH() g_pf.inh.Signature
+#define IFH(x) g_pf.inh.FileHeader.x
+#define IOH(x) g_pf.inh.OptionalHeader.x
+#define IDD(x, y) g_pf.inh.OptionalHeader.DataDirectory[x].y
+#define ISH1(x, y) g_pf.psa[x].psh.y
+#define ISH2(x) g_pf.psa[x].shdata
+
+#define SIZE3(x) x+(IMAGE_NUMBEROF_DIRECTORY_ENTRIES*3)+(2-(x%3))
 #endif

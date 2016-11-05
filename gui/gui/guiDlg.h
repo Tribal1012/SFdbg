@@ -8,6 +8,7 @@
 #include "debugger.h"
 #include "PE_header.h"
 #include "Timeless.h"
+#include "PE_viewer.h"
 #include "afxcmn.h"
 
 // CguiDlg 대화 상자
@@ -37,6 +38,7 @@ protected:
 	afx_msg BOOL OnClose();
 	virtual void OnDestroy();
 public:
+	afx_msg void OnCustomdrawList(NMHDR* pNMHDR, LRESULT* pResult);
 	afx_msg void OnDeltaposSpin1(NMHDR *pNMHDR, LRESULT *pResult);
 	afx_msg void OnLvnItemchangedList1(NMHDR *pNMHDR, LRESULT *pResult);
 	afx_msg void OnLvnItemchangedList2(NMHDR *pNMHDR, LRESULT *pResult);
@@ -47,6 +49,9 @@ public:
 	afx_msg void OnBnClickedButton2();		//Attach
 	afx_msg void OnBnClickedButton3();		//Single Step
 	afx_msg void OnBnClickedButton4();		//Process List
+	afx_msg void OnBnClickedButton5();		//Break Point
+	afx_msg void OnBnClickedButton7();		//Refresh
+	afx_msg void OnBnClickedButton8();
 	//afx_msg HBRUSH OnCtlColor(CDC* pDC, CWnd* pWnd, UINT nCtlColor);
 	CListCtrl m_list1;
 	CListCtrl m_list2;

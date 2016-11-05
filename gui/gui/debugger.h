@@ -49,29 +49,6 @@ namespace SFdbg {
 		BOOL isstep;
 	};
 
-	class BREAKPOINT_TABLE
-	{
-	public:
-		DWORD Eip;
-		WORD opcode;
-	/*
-	public:
-		BREAKPOINT_TABLE* nextptr;
-		BREAKPOINT_TABLE* prevptr;
-
-		BREAKPOINT_TABLE()
-		{
-			nextptr = NULL;
-			prevptr = NULL;
-		}
-		~BREAKPOINT_TABLE()
-		{
-			*prevptr->nextptr = nextptr;
-			*nextptr->prevptr = prevptr;
-		}
-	*/
-	};
-
 	//Windows Debugger Class
 	class DEBUGGER: public WINDOWS_INFO
 	{
@@ -79,11 +56,9 @@ namespace SFdbg {
 		//¸â¹ö º¯¼ö
 		char g_filepath[MAX_PATH];
 		char g_cmdline[MAX_PATH];
-		unsigned int g_bp_table_count;
 		EXECUTE g_exec;				//attahed process check
 		DEBUG_EVENT g_de;			//store debug event
 		CONTEXT g_context;		//store register
-		BREAKPOINT_TABLE g_bp_table[1024];	//need linked list
 		char g_KeyBUF[128];
 		char g_count;
 
@@ -99,13 +74,14 @@ namespace SFdbg {
 		void Print_Stack(CListCtrl* m_list);
 		void Modify_Stack(CListCtrl* m_list, DWORD memsize);
 		void View_Memory(DWORD address, CListCtrl* m_list);
-		BOOL Set_SoftBreakPoint(DWORD address);
-		BOOL Delete_SoftBreakPoint(DWORD address);
+		BOOL Set_SoftBreakPoint(DWORD address, PDWORD opcode);
+		BOOL Delete_SoftBreakPoint(DWORD address, PDWORD opcode);
 		BOOL Set_SingleStep(void);
 		BOOL Delete_SingleStep(void);
 		BOOL Start_Debug(CListCtrl* m_list1, CListCtrl* m_list2, CListBox* m_list3, CListCtrl* m_list4, CListCtrl* m_list5);
 		void Set_ExecConfig(int flag);
 		BOOL Get_ExecConfig(int flag);
+		void ResetAll(void);
 	};
 
 	extern DEBUGGER g_mydebugger;

@@ -661,255 +661,255 @@ void PrintDisassem(CListCtrl* m_list, LVITEM* lItem)		//This Function put string
 	{
 	case 0x0F:/*TWOBYTE*/
 	/* Opcode + 8bit MOD */
-	case 0x00:sprintf(szText, "add "); Print_ModRM(IF_MOD(g_iif), 8, szText); sprintf(szText, "%s, ", szText); Print_REG(IF_MOD(g_iif), 8, szText); break;//add Eb, Gb
-	case 0x01:sprintf(szText, "add "); Print_ModRM(IF_MOD(g_iif), 32, szText); sprintf(szText, "%s, ", szText); Print_REG(IF_MOD(g_iif), 32, szText); break;//add Ev, Gv
-	case 0x02:sprintf(szText, "add "); Print_REG(IF_MOD(g_iif), 8, szText); sprintf(szText, "%s, ", szText); Print_ModRM(IF_MOD(g_iif), 8, szText); break;//add Gb, Eb
-	case 0x03:sprintf(szText, "add "); Print_REG(IF_MOD(g_iif), 32, szText); sprintf(szText, "%s, ", szText); Print_ModRM(IF_MOD(g_iif), 32, szText); break;//add Gv, Ev
-	case 0x08:sprintf(szText, "or "); Print_ModRM(IF_MOD(g_iif), 8, szText); sprintf(szText, "%s, ", szText); Print_REG(IF_MOD(g_iif), 8, szText); break;//or Eb, Gb
-	case 0x09:sprintf(szText, "or "); Print_ModRM(IF_MOD(g_iif), 32, szText); sprintf(szText, "%s, ", szText); Print_REG(IF_MOD(g_iif), 32, szText); break;//or Ev, Gv
-	case 0x0A:sprintf(szText, "or "); Print_REG(IF_MOD(g_iif), 8, szText); sprintf(szText, "%s, ", szText); Print_ModRM(IF_MOD(g_iif), 8, szText); break;//or Gb, Eb
-	case 0x0B:sprintf(szText, "or "); Print_REG(IF_MOD(g_iif), 32, szText); sprintf(szText, "%s, ", szText); Print_ModRM(IF_MOD(g_iif), 32, szText); break;//or Gv, Ev
-	case 0x10:sprintf(szText, "adc "); Print_ModRM(IF_MOD(g_iif), 8, szText); sprintf(szText, "%s, ", szText); Print_REG(IF_MOD(g_iif), 8, szText); break;//adc Eb, Gb
-	case 0x11:sprintf(szText, "adc "); Print_ModRM(IF_MOD(g_iif), 32, szText); sprintf(szText, "%s, ", szText); Print_REG(IF_MOD(g_iif), 32, szText); break;//adc Ev, Gv
-	case 0x12:sprintf(szText, "adc "); Print_REG(IF_MOD(g_iif), 8, szText); sprintf(szText, "%s, ", szText); Print_ModRM(IF_MOD(g_iif), 8, szText); break; //adc Gb, Eb
-	case 0x13:sprintf(szText, "adc "); Print_REG(IF_MOD(g_iif), 32, szText); sprintf(szText, "%s, ", szText); Print_ModRM(IF_MOD(g_iif), 32, szText); break;//adc Gv, Ev
-	case 0x18:sprintf(szText, "sbb "); Print_ModRM(IF_MOD(g_iif), 8, szText); sprintf(szText, "%s, ", szText); Print_REG(IF_MOD(g_iif), 8, szText); break;//sbb Eb, Gb
-	case 0x19:sprintf(szText, "sbb "); Print_ModRM(IF_MOD(g_iif), 32, szText); sprintf(szText, "%s, ", szText); Print_REG(IF_MOD(g_iif), 32, szText); break;//sbb Ev, Gv
-	case 0x1A:sprintf(szText, "sbb "); Print_REG(IF_MOD(g_iif), 8, szText); sprintf(szText, "%s, ", szText); Print_ModRM(IF_MOD(g_iif), 8, szText); break; //sbb Gb, Eb
-	case 0x1B:sprintf(szText, "sbb "); Print_REG(IF_MOD(g_iif), 32, szText); sprintf(szText, "%s, ", szText); Print_ModRM(IF_MOD(g_iif), 32, szText); break;//sbb Gv, Ev
-	case 0x20:sprintf(szText, "and "); Print_ModRM(IF_MOD(g_iif), 8, szText); sprintf(szText, "%s, ", szText); Print_REG(IF_MOD(g_iif), 8, szText); break;//and Eb, Gb
-	case 0x21:sprintf(szText, "and "); Print_ModRM(IF_MOD(g_iif), 32, szText); sprintf(szText, "%s, ", szText); Print_REG(IF_MOD(g_iif), 32, szText); break;//and Ev, Gv
-	case 0x22:sprintf(szText, "and "); Print_REG(IF_MOD(g_iif), 8, szText); sprintf(szText, "%s, ", szText); Print_ModRM(IF_MOD(g_iif), 8, szText); break; //and Gb, Eb
-	case 0x23:sprintf(szText, "and "); Print_REG(IF_MOD(g_iif), 32, szText); sprintf(szText, "%s, ", szText); Print_ModRM(IF_MOD(g_iif), 32, szText); break;//and Gv, Ev
-	case 0x28:sprintf(szText, "sub "); Print_ModRM(IF_MOD(g_iif), 8, szText); sprintf(szText, "%s, ", szText); Print_REG(IF_MOD(g_iif), 8, szText); break;//sub Eb, Gb
-	case 0x29:sprintf(szText, "sub "); Print_ModRM(IF_MOD(g_iif), 32, szText); sprintf(szText, "%s, ", szText); Print_REG(IF_MOD(g_iif), 32, szText); break;//sub Ev, Gv
-	case 0x2A:sprintf(szText, "sub "); Print_REG(IF_MOD(g_iif), 8, szText); sprintf(szText, "%s, ", szText); Print_ModRM(IF_MOD(g_iif), 8, szText); break; //sub Gb, Eb
-	case 0x2B:sprintf(szText, "sub "); Print_REG(IF_MOD(g_iif), 32, szText); sprintf(szText, "%s, ", szText); Print_ModRM(IF_MOD(g_iif), 32, szText); break;//sub Gv, Ev
-	case 0x30:sprintf(szText, "xor "); Print_ModRM(IF_MOD(g_iif), 8, szText); sprintf(szText, "%s, ", szText); Print_REG(IF_MOD(g_iif), 8, szText); break;//xor Eb, Gb
-	case 0x31:sprintf(szText, "xor "); Print_ModRM(IF_MOD(g_iif), 32, szText); sprintf(szText, "%s, ", szText); Print_REG(IF_MOD(g_iif), 32, szText); break;//xor Ev, Gv
-	case 0x32:sprintf(szText, "xor "); Print_REG(IF_MOD(g_iif), 8, szText); sprintf(szText, "%s, ", szText); Print_ModRM(IF_MOD(g_iif), 8, szText); break; //xor Gb, Eb
-	case 0x33:sprintf(szText, "xor "); Print_REG(IF_MOD(g_iif), 32, szText); sprintf(szText, "%s, ", szText); Print_ModRM(IF_MOD(g_iif), 32, szText); break;//xor Gv, Ev
-	case 0x38:sprintf(szText, "cmp "); Print_ModRM(IF_MOD(g_iif), 8, szText); sprintf(szText, "%s, ", szText); Print_REG(IF_MOD(g_iif), 8, szText); break;//cmp Eb, Gb
-	case 0x39:sprintf(szText, "cmp "); Print_ModRM(IF_MOD(g_iif), 32, szText); sprintf(szText, "%s, ", szText); Print_REG(IF_MOD(g_iif), 32, szText); break;//cmp Ev, Gv
-	case 0x3A:sprintf(szText, "cmp "); Print_REG(IF_MOD(g_iif), 8, szText); sprintf(szText, "%s, ", szText); Print_ModRM(IF_MOD(g_iif), 8, szText); break; //cmp Gb, Eb
-	case 0x3B:sprintf(szText, "cmp "); Print_REG(IF_MOD(g_iif), 32, szText); sprintf(szText, "%s, ", szText); Print_ModRM(IF_MOD(g_iif), 32, szText); break;//cmp Gv, Ev
-	case 0x62:sprintf(szText, "bound "); Print_REG(IF_MOD(g_iif), 32, szText); sprintf(szText, "%s, ", szText); Print_ModRM(IF_MOD(g_iif), 32, szText); break;//BOUND
-	case 0x84:sprintf(szText, "test "); Print_ModRM(IF_MOD(g_iif), 8, szText); sprintf(szText, "%s, ", szText); Print_REG(IF_MOD(g_iif), 8, szText); break;//test Eb, Gb
-	case 0x85:sprintf(szText, "test "); Print_ModRM(IF_MOD(g_iif), 32, szText); sprintf(szText, "%s, ", szText); Print_REG(IF_MOD(g_iif), 32, szText); break;//test Ev, Gv
-	case 0x86:sprintf(szText, "xchg "); Print_ModRM(IF_MOD(g_iif), 8, szText); sprintf(szText, "%s, ", szText); Print_REG(IF_MOD(g_iif), 8, szText); break;//xchg Eb, Gb
-	case 0x87:sprintf(szText, "xchg "); Print_ModRM(IF_MOD(g_iif), 32, szText); sprintf(szText, "%s, ", szText); Print_REG(IF_MOD(g_iif), 32, szText); break;//xchg Ev, Gv
-	case 0x88:sprintf(szText, "mov "); Print_ModRM(IF_MOD(g_iif), 8, szText); sprintf(szText, "%s, ", szText); Print_REG(IF_MOD(g_iif), 8, szText); break;//mov Eb, Gb
-	case 0x89:sprintf(szText, "mov "); Print_ModRM(IF_MOD(g_iif), 32, szText); sprintf(szText, "%s, ", szText); Print_REG(IF_MOD(g_iif), 32, szText); break;//mov Ev, Gv
-	case 0x8A:sprintf(szText, "mov "); Print_REG(IF_MOD(g_iif), 8, szText); sprintf(szText, "%s, ", szText); Print_ModRM(IF_MOD(g_iif), 8, szText); break; //mov Gb, Eb
-	case 0x8B:sprintf(szText, "mov "); Print_REG(IF_MOD(g_iif), 32, szText); sprintf(szText, "%s, ", szText); Print_ModRM(IF_MOD(g_iif), 32, szText); break;//mov Gv, Ev
-	case 0x8C:sprintf(szText, "mov "); Print_ModRM(IF_MOD(g_iif), 16, szText); sprintf(szText, "%s, ", szText); Print_REG(IF_MOD(g_iif), 16, szText); break;//mov Ew, Sw
-	case 0x8D:sprintf(szText, "lea "); Print_REG(IF_MOD(g_iif), 32, szText); sprintf(szText, "%s, ", szText); Print_ModRM(IF_MOD(g_iif), 32, szText); break;//lea Gv, M
-	case 0x8E:sprintf(szText, "mov "); Print_REG(IF_MOD(g_iif), 16, szText); sprintf(szText, "%s, ", szText); Print_ModRM(IF_MOD(g_iif), 16, szText); break;//mov Sw, Ew
-	case 0x8F:sprintf(szText, "pop "); (RegTable[IF_MOD(g_iif)]==0)?Print_ModRM(IF_MOD(g_iif), 32, szText):sprintf(szText, "%s???", szText); break;//pop Ev Reg가 0으로 고정됨(2 ~ 6)
-	case 0xC4:sprintf(szText, "les "); Print_REG(IF_MOD(g_iif), 32, szText); sprintf(szText, "%s, ", szText); Print_ModRM(IF_MOD(g_iif), 32, szText); break;//les Gv, Mp(lea처럼 좀 복잡)
-	case 0xC5:sprintf(szText, "lds "); Print_REG(IF_MOD(g_iif), 32, szText); sprintf(szText, "%s, ", szText); Print_ModRM(IF_MOD(g_iif), 32, szText); break;//lds Gv, Mp
-	case 0xD0:sprintf(szText, "rol "); Print_ModRM(IF_MOD(g_iif), 8, szText); sprintf(szText, "%s, ", szText); sprintf(szText, "%s1", szText); break;//rol Eb, 1
-	case 0xD1:sprintf(szText, "rol "); Print_ModRM(IF_MOD(g_iif), 32, szText); sprintf(szText, "%s, ", szText); sprintf(szText, "%s1", szText); break;//ro1 Ev, 1
-	case 0xD2:sprintf(szText, "rol "); Print_ModRM(IF_MOD(g_iif), 8, szText); sprintf(szText, "%s, ", szText); sprintf(szText, "%scl", szText); break;//rol Eb, CL
-	case 0xD3:sprintf(szText, "rol "); Print_ModRM(IF_MOD(g_iif), 32, szText); sprintf(szText, "%s, ", szText); sprintf(szText, "%scl", szText); break;//rol Ev, CL
-	case 0xFE:sprintf(szText, "inc "); Print_ModRM(IF_MOD(g_iif), 8, szText); break;//inc, dec 8bit
-	case 0xFF:sprintf(szText, "inc "); Print_ModRM(IF_MOD(g_iif), 32, szText); break;//inc, dec 32bit
+	case 0x00:sprintf_s(szText, "add "); Print_ModRM(IF_MOD(g_iif), 8, szText); sprintf_s(szText, "%s, ", szText); Print_REG(IF_MOD(g_iif), 8, szText); break;//add Eb, Gb
+	case 0x01:sprintf_s(szText, "add "); Print_ModRM(IF_MOD(g_iif), 32, szText); sprintf_s(szText, "%s, ", szText); Print_REG(IF_MOD(g_iif), 32, szText); break;//add Ev, Gv
+	case 0x02:sprintf_s(szText, "add "); Print_REG(IF_MOD(g_iif), 8, szText); sprintf_s(szText, "%s, ", szText); Print_ModRM(IF_MOD(g_iif), 8, szText); break;//add Gb, Eb
+	case 0x03:sprintf_s(szText, "add "); Print_REG(IF_MOD(g_iif), 32, szText); sprintf_s(szText, "%s, ", szText); Print_ModRM(IF_MOD(g_iif), 32, szText); break;//add Gv, Ev
+	case 0x08:sprintf_s(szText, "or "); Print_ModRM(IF_MOD(g_iif), 8, szText); sprintf_s(szText, "%s, ", szText); Print_REG(IF_MOD(g_iif), 8, szText); break;//or Eb, Gb
+	case 0x09:sprintf_s(szText, "or "); Print_ModRM(IF_MOD(g_iif), 32, szText); sprintf_s(szText, "%s, ", szText); Print_REG(IF_MOD(g_iif), 32, szText); break;//or Ev, Gv
+	case 0x0A:sprintf_s(szText, "or "); Print_REG(IF_MOD(g_iif), 8, szText); sprintf_s(szText, "%s, ", szText); Print_ModRM(IF_MOD(g_iif), 8, szText); break;//or Gb, Eb
+	case 0x0B:sprintf_s(szText, "or "); Print_REG(IF_MOD(g_iif), 32, szText); sprintf_s(szText, "%s, ", szText); Print_ModRM(IF_MOD(g_iif), 32, szText); break;//or Gv, Ev
+	case 0x10:sprintf_s(szText, "adc "); Print_ModRM(IF_MOD(g_iif), 8, szText); sprintf_s(szText, "%s, ", szText); Print_REG(IF_MOD(g_iif), 8, szText); break;//adc Eb, Gb
+	case 0x11:sprintf_s(szText, "adc "); Print_ModRM(IF_MOD(g_iif), 32, szText); sprintf_s(szText, "%s, ", szText); Print_REG(IF_MOD(g_iif), 32, szText); break;//adc Ev, Gv
+	case 0x12:sprintf_s(szText, "adc "); Print_REG(IF_MOD(g_iif), 8, szText); sprintf_s(szText, "%s, ", szText); Print_ModRM(IF_MOD(g_iif), 8, szText); break; //adc Gb, Eb
+	case 0x13:sprintf_s(szText, "adc "); Print_REG(IF_MOD(g_iif), 32, szText); sprintf_s(szText, "%s, ", szText); Print_ModRM(IF_MOD(g_iif), 32, szText); break;//adc Gv, Ev
+	case 0x18:sprintf_s(szText, "sbb "); Print_ModRM(IF_MOD(g_iif), 8, szText); sprintf_s(szText, "%s, ", szText); Print_REG(IF_MOD(g_iif), 8, szText); break;//sbb Eb, Gb
+	case 0x19:sprintf_s(szText, "sbb "); Print_ModRM(IF_MOD(g_iif), 32, szText); sprintf_s(szText, "%s, ", szText); Print_REG(IF_MOD(g_iif), 32, szText); break;//sbb Ev, Gv
+	case 0x1A:sprintf_s(szText, "sbb "); Print_REG(IF_MOD(g_iif), 8, szText); sprintf_s(szText, "%s, ", szText); Print_ModRM(IF_MOD(g_iif), 8, szText); break; //sbb Gb, Eb
+	case 0x1B:sprintf_s(szText, "sbb "); Print_REG(IF_MOD(g_iif), 32, szText); sprintf_s(szText, "%s, ", szText); Print_ModRM(IF_MOD(g_iif), 32, szText); break;//sbb Gv, Ev
+	case 0x20:sprintf_s(szText, "and "); Print_ModRM(IF_MOD(g_iif), 8, szText); sprintf_s(szText, "%s, ", szText); Print_REG(IF_MOD(g_iif), 8, szText); break;//and Eb, Gb
+	case 0x21:sprintf_s(szText, "and "); Print_ModRM(IF_MOD(g_iif), 32, szText); sprintf_s(szText, "%s, ", szText); Print_REG(IF_MOD(g_iif), 32, szText); break;//and Ev, Gv
+	case 0x22:sprintf_s(szText, "and "); Print_REG(IF_MOD(g_iif), 8, szText); sprintf_s(szText, "%s, ", szText); Print_ModRM(IF_MOD(g_iif), 8, szText); break; //and Gb, Eb
+	case 0x23:sprintf_s(szText, "and "); Print_REG(IF_MOD(g_iif), 32, szText); sprintf_s(szText, "%s, ", szText); Print_ModRM(IF_MOD(g_iif), 32, szText); break;//and Gv, Ev
+	case 0x28:sprintf_s(szText, "sub "); Print_ModRM(IF_MOD(g_iif), 8, szText); sprintf_s(szText, "%s, ", szText); Print_REG(IF_MOD(g_iif), 8, szText); break;//sub Eb, Gb
+	case 0x29:sprintf_s(szText, "sub "); Print_ModRM(IF_MOD(g_iif), 32, szText); sprintf_s(szText, "%s, ", szText); Print_REG(IF_MOD(g_iif), 32, szText); break;//sub Ev, Gv
+	case 0x2A:sprintf_s(szText, "sub "); Print_REG(IF_MOD(g_iif), 8, szText); sprintf_s(szText, "%s, ", szText); Print_ModRM(IF_MOD(g_iif), 8, szText); break; //sub Gb, Eb
+	case 0x2B:sprintf_s(szText, "sub "); Print_REG(IF_MOD(g_iif), 32, szText); sprintf_s(szText, "%s, ", szText); Print_ModRM(IF_MOD(g_iif), 32, szText); break;//sub Gv, Ev
+	case 0x30:sprintf_s(szText, "xor "); Print_ModRM(IF_MOD(g_iif), 8, szText); sprintf_s(szText, "%s, ", szText); Print_REG(IF_MOD(g_iif), 8, szText); break;//xor Eb, Gb
+	case 0x31:sprintf_s(szText, "xor "); Print_ModRM(IF_MOD(g_iif), 32, szText); sprintf_s(szText, "%s, ", szText); Print_REG(IF_MOD(g_iif), 32, szText); break;//xor Ev, Gv
+	case 0x32:sprintf_s(szText, "xor "); Print_REG(IF_MOD(g_iif), 8, szText); sprintf_s(szText, "%s, ", szText); Print_ModRM(IF_MOD(g_iif), 8, szText); break; //xor Gb, Eb
+	case 0x33:sprintf_s(szText, "xor "); Print_REG(IF_MOD(g_iif), 32, szText); sprintf_s(szText, "%s, ", szText); Print_ModRM(IF_MOD(g_iif), 32, szText); break;//xor Gv, Ev
+	case 0x38:sprintf_s(szText, "cmp "); Print_ModRM(IF_MOD(g_iif), 8, szText); sprintf_s(szText, "%s, ", szText); Print_REG(IF_MOD(g_iif), 8, szText); break;//cmp Eb, Gb
+	case 0x39:sprintf_s(szText, "cmp "); Print_ModRM(IF_MOD(g_iif), 32, szText); sprintf_s(szText, "%s, ", szText); Print_REG(IF_MOD(g_iif), 32, szText); break;//cmp Ev, Gv
+	case 0x3A:sprintf_s(szText, "cmp "); Print_REG(IF_MOD(g_iif), 8, szText); sprintf_s(szText, "%s, ", szText); Print_ModRM(IF_MOD(g_iif), 8, szText); break; //cmp Gb, Eb
+	case 0x3B:sprintf_s(szText, "cmp "); Print_REG(IF_MOD(g_iif), 32, szText); sprintf_s(szText, "%s, ", szText); Print_ModRM(IF_MOD(g_iif), 32, szText); break;//cmp Gv, Ev
+	case 0x62:sprintf_s(szText, "bound "); Print_REG(IF_MOD(g_iif), 32, szText); sprintf_s(szText, "%s, ", szText); Print_ModRM(IF_MOD(g_iif), 32, szText); break;//BOUND
+	case 0x84:sprintf_s(szText, "test "); Print_ModRM(IF_MOD(g_iif), 8, szText); sprintf_s(szText, "%s, ", szText); Print_REG(IF_MOD(g_iif), 8, szText); break;//test Eb, Gb
+	case 0x85:sprintf_s(szText, "test "); Print_ModRM(IF_MOD(g_iif), 32, szText); sprintf_s(szText, "%s, ", szText); Print_REG(IF_MOD(g_iif), 32, szText); break;//test Ev, Gv
+	case 0x86:sprintf_s(szText, "xchg "); Print_ModRM(IF_MOD(g_iif), 8, szText); sprintf_s(szText, "%s, ", szText); Print_REG(IF_MOD(g_iif), 8, szText); break;//xchg Eb, Gb
+	case 0x87:sprintf_s(szText, "xchg "); Print_ModRM(IF_MOD(g_iif), 32, szText); sprintf_s(szText, "%s, ", szText); Print_REG(IF_MOD(g_iif), 32, szText); break;//xchg Ev, Gv
+	case 0x88:sprintf_s(szText, "mov "); Print_ModRM(IF_MOD(g_iif), 8, szText); sprintf_s(szText, "%s, ", szText); Print_REG(IF_MOD(g_iif), 8, szText); break;//mov Eb, Gb
+	case 0x89:sprintf_s(szText, "mov "); Print_ModRM(IF_MOD(g_iif), 32, szText); sprintf_s(szText, "%s, ", szText); Print_REG(IF_MOD(g_iif), 32, szText); break;//mov Ev, Gv
+	case 0x8A:sprintf_s(szText, "mov "); Print_REG(IF_MOD(g_iif), 8, szText); sprintf_s(szText, "%s, ", szText); Print_ModRM(IF_MOD(g_iif), 8, szText); break; //mov Gb, Eb
+	case 0x8B:sprintf_s(szText, "mov "); Print_REG(IF_MOD(g_iif), 32, szText); sprintf_s(szText, "%s, ", szText); Print_ModRM(IF_MOD(g_iif), 32, szText); break;//mov Gv, Ev
+	case 0x8C:sprintf_s(szText, "mov "); Print_ModRM(IF_MOD(g_iif), 16, szText); sprintf_s(szText, "%s, ", szText); Print_REG(IF_MOD(g_iif), 16, szText); break;//mov Ew, Sw
+	case 0x8D:sprintf_s(szText, "lea "); Print_REG(IF_MOD(g_iif), 32, szText); sprintf_s(szText, "%s, ", szText); Print_ModRM(IF_MOD(g_iif), 32, szText); break;//lea Gv, M
+	case 0x8E:sprintf_s(szText, "mov "); Print_REG(IF_MOD(g_iif), 16, szText); sprintf_s(szText, "%s, ", szText); Print_ModRM(IF_MOD(g_iif), 16, szText); break;//mov Sw, Ew
+	case 0x8F:sprintf_s(szText, "pop "); (RegTable[IF_MOD(g_iif)]==0)?Print_ModRM(IF_MOD(g_iif), 32, szText):sprintf_s(szText, "%s???", szText); break;//pop Ev Reg가 0으로 고정됨(2 ~ 6)
+	case 0xC4:sprintf_s(szText, "les "); Print_REG(IF_MOD(g_iif), 32, szText); sprintf_s(szText, "%s, ", szText); Print_ModRM(IF_MOD(g_iif), 32, szText); break;//les Gv, Mp(lea처럼 좀 복잡)
+	case 0xC5:sprintf_s(szText, "lds "); Print_REG(IF_MOD(g_iif), 32, szText); sprintf_s(szText, "%s, ", szText); Print_ModRM(IF_MOD(g_iif), 32, szText); break;//lds Gv, Mp
+	case 0xD0:sprintf_s(szText, "rol "); Print_ModRM(IF_MOD(g_iif), 8, szText); sprintf_s(szText, "%s, ", szText); sprintf_s(szText, "%s1", szText); break;//rol Eb, 1
+	case 0xD1:sprintf_s(szText, "rol "); Print_ModRM(IF_MOD(g_iif), 32, szText); sprintf_s(szText, "%s, ", szText); sprintf_s(szText, "%s1", szText); break;//ro1 Ev, 1
+	case 0xD2:sprintf_s(szText, "rol "); Print_ModRM(IF_MOD(g_iif), 8, szText); sprintf_s(szText, "%s, ", szText); sprintf_s(szText, "%scl", szText); break;//rol Eb, CL
+	case 0xD3:sprintf_s(szText, "rol "); Print_ModRM(IF_MOD(g_iif), 32, szText); sprintf_s(szText, "%s, ", szText); sprintf_s(szText, "%scl", szText); break;//rol Ev, CL
+	case 0xFE:sprintf_s(szText, "inc "); Print_ModRM(IF_MOD(g_iif), 8, szText); break;//inc, dec 8bit
+	case 0xFF:sprintf_s(szText, "inc "); Print_ModRM(IF_MOD(g_iif), 32, szText); break;//inc, dec 32bit
 	/* Opcode + 8bit MOD + 8bit IMM */
-	case 0x6B:sprintf(szText, "imul "); Print_REG(IF_MOD(g_iif), 32, szText); sprintf(szText, "%s, ", szText); Print_ModRM(IF_MOD(g_iif), 32, szText); sprintf(szText, "%s, ", szText); Print_IMM(8, szText); break;//IMUL Gv Ev Ib
-	case 0x80:sprintf(szText, "add "); Print_ModRM(IF_MOD(g_iif), 8, szText); sprintf(szText, "%s, ", szText); Print_IMM(8, szText); break;//add Eb, Ib
-	case 0x82:sprintf(szText, "sub "); Print_ModRM(IF_MOD(g_iif), 8, szText); sprintf(szText, "%s, ", szText); Print_IMM(8, szText); break;//sub Eb, Ib
-	case 0x83:sprintf(szText, "sub "); Print_ModRM(IF_MOD(g_iif), 32, szText); sprintf(szText, "%s, ", szText); Print_IMM(8, szText); break;//sub Ev, Ib
-	case 0xC0:sprintf(szText, "ror "); Print_ModRM(IF_MOD(g_iif), 8, szText); sprintf(szText, "%s, ", szText); Print_IMM(8, szText); break;//ROR Eb, Ib
-	case 0xC1:sprintf(szText, "ror "); Print_ModRM(IF_MOD(g_iif), 32, szText); sprintf(szText, "%s, ", szText); Print_IMM(8, szText); break;//ROR Ev, Ib
-	case 0xC6:sprintf(szText, "mov "); if(RegTable[IF_MOD(g_iif)]==0) { Print_ModRM(IF_MOD(g_iif), 8, szText); sprintf(szText, "%s, ", szText); Print_IMM(8, szText); break; }
-							  else { sprintf(szText, "%s???", szText); break; }//mov Eb, Ib Reg가 0으로 고정됨(2 ~ 6)
-	case 0xF6:sprintf(szText, "test "); Print_ModRM(IF_MOD(g_iif), 8, szText); sprintf(szText, "%s, ", szText); Print_IMM(8, szText); break;//test Eb
+	case 0x6B:sprintf_s(szText, "imul "); Print_REG(IF_MOD(g_iif), 32, szText); sprintf_s(szText, "%s, ", szText); Print_ModRM(IF_MOD(g_iif), 32, szText); sprintf_s(szText, "%s, ", szText); Print_IMM(8, szText); break;//IMUL Gv Ev Ib
+	case 0x80:sprintf_s(szText, "add "); Print_ModRM(IF_MOD(g_iif), 8, szText); sprintf_s(szText, "%s, ", szText); Print_IMM(8, szText); break;//add Eb, Ib
+	case 0x82:sprintf_s(szText, "sub "); Print_ModRM(IF_MOD(g_iif), 8, szText); sprintf_s(szText, "%s, ", szText); Print_IMM(8, szText); break;//sub Eb, Ib
+	case 0x83:sprintf_s(szText, "sub "); Print_ModRM(IF_MOD(g_iif), 32, szText); sprintf_s(szText, "%s, ", szText); Print_IMM(8, szText); break;//sub Ev, Ib
+	case 0xC0:sprintf_s(szText, "ror "); Print_ModRM(IF_MOD(g_iif), 8, szText); sprintf_s(szText, "%s, ", szText); Print_IMM(8, szText); break;//ROR Eb, Ib
+	case 0xC1:sprintf_s(szText, "ror "); Print_ModRM(IF_MOD(g_iif), 32, szText); sprintf_s(szText, "%s, ", szText); Print_IMM(8, szText); break;//ROR Ev, Ib
+	case 0xC6:sprintf_s(szText, "mov "); if(RegTable[IF_MOD(g_iif)]==0) { Print_ModRM(IF_MOD(g_iif), 8, szText); sprintf_s(szText, "%s, ", szText); Print_IMM(8, szText); break; }
+							  else { sprintf_s(szText, "%s???", szText); break; }//mov Eb, Ib Reg가 0으로 고정됨(2 ~ 6)
+	case 0xF6:sprintf_s(szText, "test "); Print_ModRM(IF_MOD(g_iif), 8, szText); sprintf_s(szText, "%s, ", szText); Print_IMM(8, szText); break;//test Eb
 	/* Opcode + 8bit MOD + 32bit IMM */
-	case 0x81:sprintf(szText, "add "); Print_ModRM(IF_MOD(g_iif), 32, szText); sprintf(szText, "%s, ", szText); Print_IMM(32, szText); break;//add Ev Iv
-	case 0x69:sprintf(szText, "imul "); Print_REG(IF_MOD(g_iif), 32, szText); sprintf(szText, "%s, ", szText); Print_ModRM(IF_MOD(g_iif), 32, szText); sprintf(szText, "%s, ", szText); Print_IMM(32, szText); break;//IMUL Gv Ev Iv
-	case 0xC7:sprintf(szText, "mov "); if(RegTable[IF_MOD(g_iif)]==0) { Print_ModRM(IF_MOD(g_iif), 32, szText); sprintf(szText, "%s, ", szText); Print_IMM(32, szText); break; }
-							  else { sprintf(szText, "%s???", szText); break; }//mov Ev, Iv Reg가 0으로 고정됨(2 ~ 6)
-	case 0xF7:sprintf(szText, "test "); Print_ModRM(IF_MOD(g_iif), 32, szText); sprintf(szText, "%s, ", szText); Print_IMM(32, szText); break;//test Ev
+	case 0x81:sprintf_s(szText, "add "); Print_ModRM(IF_MOD(g_iif), 32, szText); sprintf_s(szText, "%s, ", szText); Print_IMM(32, szText); break;//add Ev Iv
+	case 0x69:sprintf_s(szText, "imul "); Print_REG(IF_MOD(g_iif), 32, szText); sprintf_s(szText, "%s, ", szText); Print_ModRM(IF_MOD(g_iif), 32, szText); sprintf_s(szText, "%s, ", szText); Print_IMM(32, szText); break;//IMUL Gv Ev Iv
+	case 0xC7:sprintf_s(szText, "mov "); if(RegTable[IF_MOD(g_iif)]==0) { Print_ModRM(IF_MOD(g_iif), 32, szText); sprintf_s(szText, "%s, ", szText); Print_IMM(32, szText); break; }
+							  else { sprintf_s(szText, "%s???", szText); break; }//mov Ev, Iv Reg가 0으로 고정됨(2 ~ 6)
+	case 0xF7:sprintf_s(szText, "test "); Print_ModRM(IF_MOD(g_iif), 32, szText); sprintf_s(szText, "%s, ", szText); Print_IMM(32, szText); break;//test Ev
 	/* Opcode + 8bit IMM */
-	case 0x04:sprintf(szText, "add "); sprintf(szText, "%sal, ", szText); Print_IMM(8, szText); break;//add AL, Ib
-	case 0x0C:sprintf(szText, "or "); sprintf(szText, "%sal, ", szText); Print_IMM(8, szText); break;//or AL, ib
-	case 0x14:sprintf(szText, "adc "); sprintf(szText, "%sal, ", szText); Print_IMM(8, szText); break;//adc AL, Ib
-	case 0x1C:sprintf(szText, "sbb "); sprintf(szText, "%sal, ", szText); Print_IMM(8, szText); break;//sbb AL, Ib
-	case 0x24:sprintf(szText, "and "); sprintf(szText, "%sal, ", szText); Print_IMM(8, szText); break;//and AL, Ib
-	case 0x2C:sprintf(szText, "sub "); sprintf(szText, "%sal, ", szText); Print_IMM(8, szText); break;//sub AL, Ib
-	case 0x34:sprintf(szText, "xor "); sprintf(szText, "%sal, ", szText); Print_IMM(8, szText); break;//xor AL, Ib
-	case 0x3C:sprintf(szText, "cmp "); sprintf(szText, "%sal, ", szText); Print_IMM(8, szText); break;//cmp AL, Ib
-	case 0x6A:sprintf(szText, "push "); Print_IMM(8, szText); break;//push Ib
-	case 0xA8:sprintf(szText, "test "); sprintf(szText, "%sal, ", szText); Print_IMM(8, szText); break;//test AL, Ib
-	case 0xB0:sprintf(szText, "mov "); sprintf(szText, "%sal, ", szText); Print_IMM(8, szText); break;//mov AL, Ib
-	case 0xB1:sprintf(szText, "mov "); sprintf(szText, "%scl, ", szText); Print_IMM(8, szText); break;//mov CL, Ib
-	case 0xB2:sprintf(szText, "mov "); sprintf(szText, "%sdl, ", szText); Print_IMM(8, szText); break;//mov DL, Ib
-	case 0xB3:sprintf(szText, "mov "); sprintf(szText, "%sbl, ", szText); Print_IMM(8, szText); break;//mov BL, Ib
-	case 0xB4:sprintf(szText, "mov "); sprintf(szText, "%sah, ", szText); Print_IMM(8, szText); break;//mov AH, Ib
-	case 0xB5:sprintf(szText, "mov "); sprintf(szText, "%sch, ", szText); Print_IMM(8, szText); break;//mov CH, Ib
-	case 0xB6:sprintf(szText, "mov "); sprintf(szText, "%sdh, ", szText); Print_IMM(8, szText); break;//mov DH, Ib
-	case 0xB7:sprintf(szText, "mov "); sprintf(szText, "%sbh, ", szText); Print_IMM(8, szText); break;//mov BH, Ib
-	case 0xCD:sprintf(szText, "int "); Print_IMM(8, szText); break;//int Ib
-	case 0xD4:sprintf(szText, "aam "); Print_IMM(8, szText); break;//aam Ib
-	case 0xD5:sprintf(szText, "aad "); Print_IMM(8, szText); break;//aad Ib
-	case 0xE3:sprintf(szText, "jcxz "); Print_IMM(8, szText); break;//jcxz
-	case 0xE4:sprintf(szText, "in "); sprintf(szText, "%sal, ", szText); Print_IMM(8, szText); break;//in AL, Ib
-	case 0xE5:sprintf(szText, "in "); sprintf(szText, "%seax, ", szText); Print_IMM(8, szText); break;//in eAX, Ib
-	case 0xE6:sprintf(szText, "out "); Print_IMM(8, szText); sprintf(szText, "%s, ", szText); sprintf(szText, "%sal", szText); break;//out Ib, AL
-	case 0xE7:sprintf(szText, "out "); Print_IMM(8, szText); sprintf(szText, "%s, ", szText); sprintf(szText, "%seax, ", szText); break;//out Ib, eAX
+	case 0x04:sprintf_s(szText, "add "); sprintf_s(szText, "%sal, ", szText); Print_IMM(8, szText); break;//add AL, Ib
+	case 0x0C:sprintf_s(szText, "or "); sprintf_s(szText, "%sal, ", szText); Print_IMM(8, szText); break;//or AL, ib
+	case 0x14:sprintf_s(szText, "adc "); sprintf_s(szText, "%sal, ", szText); Print_IMM(8, szText); break;//adc AL, Ib
+	case 0x1C:sprintf_s(szText, "sbb "); sprintf_s(szText, "%sal, ", szText); Print_IMM(8, szText); break;//sbb AL, Ib
+	case 0x24:sprintf_s(szText, "and "); sprintf_s(szText, "%sal, ", szText); Print_IMM(8, szText); break;//and AL, Ib
+	case 0x2C:sprintf_s(szText, "sub "); sprintf_s(szText, "%sal, ", szText); Print_IMM(8, szText); break;//sub AL, Ib
+	case 0x34:sprintf_s(szText, "xor "); sprintf_s(szText, "%sal, ", szText); Print_IMM(8, szText); break;//xor AL, Ib
+	case 0x3C:sprintf_s(szText, "cmp "); sprintf_s(szText, "%sal, ", szText); Print_IMM(8, szText); break;//cmp AL, Ib
+	case 0x6A:sprintf_s(szText, "push "); Print_IMM(8, szText); break;//push Ib
+	case 0xA8:sprintf_s(szText, "test "); sprintf_s(szText, "%sal, ", szText); Print_IMM(8, szText); break;//test AL, Ib
+	case 0xB0:sprintf_s(szText, "mov "); sprintf_s(szText, "%sal, ", szText); Print_IMM(8, szText); break;//mov AL, Ib
+	case 0xB1:sprintf_s(szText, "mov "); sprintf_s(szText, "%scl, ", szText); Print_IMM(8, szText); break;//mov CL, Ib
+	case 0xB2:sprintf_s(szText, "mov "); sprintf_s(szText, "%sdl, ", szText); Print_IMM(8, szText); break;//mov DL, Ib
+	case 0xB3:sprintf_s(szText, "mov "); sprintf_s(szText, "%sbl, ", szText); Print_IMM(8, szText); break;//mov BL, Ib
+	case 0xB4:sprintf_s(szText, "mov "); sprintf_s(szText, "%sah, ", szText); Print_IMM(8, szText); break;//mov AH, Ib
+	case 0xB5:sprintf_s(szText, "mov "); sprintf_s(szText, "%sch, ", szText); Print_IMM(8, szText); break;//mov CH, Ib
+	case 0xB6:sprintf_s(szText, "mov "); sprintf_s(szText, "%sdh, ", szText); Print_IMM(8, szText); break;//mov DH, Ib
+	case 0xB7:sprintf_s(szText, "mov "); sprintf_s(szText, "%sbh, ", szText); Print_IMM(8, szText); break;//mov BH, Ib
+	case 0xCD:sprintf_s(szText, "int "); Print_IMM(8, szText); break;//int Ib
+	case 0xD4:sprintf_s(szText, "aam "); Print_IMM(8, szText); break;//aam Ib
+	case 0xD5:sprintf_s(szText, "aad "); Print_IMM(8, szText); break;//aad Ib
+	case 0xE3:sprintf_s(szText, "jcxz "); Print_IMM(8, szText); break;//jcxz
+	case 0xE4:sprintf_s(szText, "in "); sprintf_s(szText, "%sal, ", szText); Print_IMM(8, szText); break;//in AL, Ib
+	case 0xE5:sprintf_s(szText, "in "); sprintf_s(szText, "%seax, ", szText); Print_IMM(8, szText); break;//in eAX, Ib
+	case 0xE6:sprintf_s(szText, "out "); Print_IMM(8, szText); sprintf_s(szText, "%s, ", szText); sprintf_s(szText, "%sal", szText); break;//out Ib, AL
+	case 0xE7:sprintf_s(szText, "out "); Print_IMM(8, szText); sprintf_s(szText, "%s, ", szText); sprintf_s(szText, "%seax, ", szText); break;//out Ib, eAX
 	/* Opcode + 16bit IMM*/
-	case 0xC2:sprintf(szText, "retn "); Print_IMM(16, szText); break;//retn lw
-	case 0xCA:sprintf(szText, "retf "); Print_IMM(16, szText); sprintf(szText, "%s, ", szText); break;//retf lw
+	case 0xC2:sprintf_s(szText, "retn "); Print_IMM(16, szText); break;//retn lw
+	case 0xCA:sprintf_s(szText, "retf "); Print_IMM(16, szText); sprintf_s(szText, "%s, ", szText); break;//retf lw
 	/* Opcode + 24bit IMM*/
-	case 0xC8:sprintf(szText, "enter "); sprintf(szText, "%s0x%04x", szText, (IF_IMM32(g_iif)&0x0000ffff)); sprintf(szText, "%s, ", szText); sprintf(szText, "%s0x%02x", szText, IF_IMM32(g_iif)>>16); break;//enter Iw Ib
+	case 0xC8:sprintf_s(szText, "enter "); sprintf_s(szText, "%s0x%04x", szText, (IF_IMM32(g_iif)&0x0000ffff)); sprintf_s(szText, "%s, ", szText); sprintf_s(szText, "%s0x%02x", szText, IF_IMM32(g_iif)>>16); break;//enter Iw Ib
 	/* Opcode + 32bit IMM */
-	case 0x05:sprintf(szText, "add "); sprintf(szText, "%seax, ", szText); Print_IMM(32, szText); break;//add eAX, Iv
-	case 0x0D:sprintf(szText, "or "); sprintf(szText, "%seax, ", szText); Print_IMM(32, szText); break;//or eAx, Iv
-	case 0x15:sprintf(szText, "adc "); sprintf(szText, "%seax, ", szText); Print_IMM(32, szText); break;//adc eAX, Iv
-	case 0x1D:sprintf(szText, "adc "); sprintf(szText, "%seax, ", szText); Print_IMM(32, szText); break;//adc eAX, Iv
-	case 0x25:sprintf(szText, "and "); sprintf(szText, "%seax, ", szText); Print_IMM(32, szText); break;//and eAX, Iv
-	case 0x2D:sprintf(szText, "sub "); sprintf(szText, "%seax, ", szText); Print_IMM(32, szText); break;//sub eAX, Iv
-	case 0x35:sprintf(szText, "xor "); sprintf(szText, "%seax, ", szText); Print_IMM(32, szText); break;//xor eAX, Iv
-	case 0x3D:sprintf(szText, "cmp "); sprintf(szText, "%seax, ", szText); Print_IMM(32, szText); break;//cmp eAX, Iv
-	case 0x68:sprintf(szText, "push "); break;//push Iv
-	case 0xA9:sprintf(szText, "test "); sprintf(szText, "%seax, ", szText); Print_IMM(32, szText); break;//test eAX, Iv
-	case 0xB8:sprintf(szText, "mov "); sprintf(szText, "%seax, ", szText); Print_IMM(32, szText); break;//mov eAX, Iv
-	case 0xB9:sprintf(szText, "mov "); sprintf(szText, "%secx, ", szText); Print_IMM(32, szText); break;//mov eCX, Iv
-	case 0xBA:sprintf(szText, "mov "); sprintf(szText, "%sedx, ", szText); Print_IMM(32, szText); break;//mov eDX, Iv
-	case 0xBB:sprintf(szText, "mov "); sprintf(szText, "%sebx, ", szText); Print_IMM(32, szText); break;//mov eBX, Iv
-	case 0xBC:sprintf(szText, "mov "); sprintf(szText, "%sesp, ", szText); Print_IMM(32, szText); break;//mov eSP, Iv
-	case 0xBD:sprintf(szText, "mov "); sprintf(szText, "%sebp, ", szText); Print_IMM(32, szText); break;//mov eBP, Iv
-	case 0xBE:sprintf(szText, "mov "); sprintf(szText, "%sesi, ", szText); Print_IMM(32, szText); break;//mov eSI, Iv
-	case 0xBF:sprintf(szText, "mov "); sprintf(szText, "%sedi, ", szText); Print_IMM(32, szText); break;//mov eDI, Iv
+	case 0x05:sprintf_s(szText, "add "); sprintf_s(szText, "%seax, ", szText); Print_IMM(32, szText); break;//add eAX, Iv
+	case 0x0D:sprintf_s(szText, "or "); sprintf_s(szText, "%seax, ", szText); Print_IMM(32, szText); break;//or eAx, Iv
+	case 0x15:sprintf_s(szText, "adc "); sprintf_s(szText, "%seax, ", szText); Print_IMM(32, szText); break;//adc eAX, Iv
+	case 0x1D:sprintf_s(szText, "adc "); sprintf_s(szText, "%seax, ", szText); Print_IMM(32, szText); break;//adc eAX, Iv
+	case 0x25:sprintf_s(szText, "and "); sprintf_s(szText, "%seax, ", szText); Print_IMM(32, szText); break;//and eAX, Iv
+	case 0x2D:sprintf_s(szText, "sub "); sprintf_s(szText, "%seax, ", szText); Print_IMM(32, szText); break;//sub eAX, Iv
+	case 0x35:sprintf_s(szText, "xor "); sprintf_s(szText, "%seax, ", szText); Print_IMM(32, szText); break;//xor eAX, Iv
+	case 0x3D:sprintf_s(szText, "cmp "); sprintf_s(szText, "%seax, ", szText); Print_IMM(32, szText); break;//cmp eAX, Iv
+	case 0x68:sprintf_s(szText, "push "); break;//push Iv
+	case 0xA9:sprintf_s(szText, "test "); sprintf_s(szText, "%seax, ", szText); Print_IMM(32, szText); break;//test eAX, Iv
+	case 0xB8:sprintf_s(szText, "mov "); sprintf_s(szText, "%seax, ", szText); Print_IMM(32, szText); break;//mov eAX, Iv
+	case 0xB9:sprintf_s(szText, "mov "); sprintf_s(szText, "%secx, ", szText); Print_IMM(32, szText); break;//mov eCX, Iv
+	case 0xBA:sprintf_s(szText, "mov "); sprintf_s(szText, "%sedx, ", szText); Print_IMM(32, szText); break;//mov eDX, Iv
+	case 0xBB:sprintf_s(szText, "mov "); sprintf_s(szText, "%sebx, ", szText); Print_IMM(32, szText); break;//mov eBX, Iv
+	case 0xBC:sprintf_s(szText, "mov "); sprintf_s(szText, "%sesp, ", szText); Print_IMM(32, szText); break;//mov eSP, Iv
+	case 0xBD:sprintf_s(szText, "mov "); sprintf_s(szText, "%sebp, ", szText); Print_IMM(32, szText); break;//mov eBP, Iv
+	case 0xBE:sprintf_s(szText, "mov "); sprintf_s(szText, "%sesi, ", szText); Print_IMM(32, szText); break;//mov eSI, Iv
+	case 0xBF:sprintf_s(szText, "mov "); sprintf_s(szText, "%sedi, ", szText); Print_IMM(32, szText); break;//mov eDI, Iv
 	/* Opcode + 8bit DIS */
-	case 0x70:sprintf(szText, "jo "); Print_DIS(8, szText); break;//jo Jb
-	case 0x71:sprintf(szText, "jno "); Print_DIS(8, szText); break;//jno Jb
-	case 0x72:sprintf(szText, "jb "); Print_DIS(8, szText); break;//jb Jb
-	case 0x73:sprintf(szText, "jnb "); Print_DIS(8, szText); break;//jnb Jb
-	case 0x74:sprintf(szText, "jz "); Print_DIS(8, szText); break;//jz Jb
-	case 0x75:sprintf(szText, "jnz "); Print_DIS(8, szText); break;//jnz Jb
-	case 0x76:sprintf(szText, "jbe "); Print_DIS(8, szText); break;//jbe Jb
-	case 0x77:sprintf(szText, "ja "); Print_DIS(8, szText); break;//ja Jb
-	case 0x78:sprintf(szText, "js "); Print_DIS(8, szText); break;//js Jb
-	case 0x79:sprintf(szText, "jns "); Print_DIS(8, szText); break;//jns Jb
-	case 0x7A:sprintf(szText, "jp "); Print_DIS(8, szText); break;//jp Jb
-	case 0x7B:sprintf(szText, "jnp "); Print_DIS(8, szText); break;//jnp Jb
-	case 0x7C:sprintf(szText, "jl "); Print_DIS(8, szText); break;//jl Jb
-	case 0x7D:sprintf(szText, "jnl "); Print_DIS(8, szText); break;//jnl Jb
-	case 0x7E:sprintf(szText, "jle "); Print_DIS(8, szText); break;//jle Jb
-	case 0x7F:sprintf(szText, "jnle "); Print_DIS(8, szText); break;//jnle Jb
-	case 0xE0:sprintf(szText, "loopnz "); Print_DIS(8, szText); break;//loopnz Jb
-	case 0xE1:sprintf(szText, "loopz "); Print_DIS(8, szText); break;//loopz Jb
-	case 0xE2:sprintf(szText, "loop "); Print_DIS(8, szText); break;//loop Jb
-	case 0xEB:sprintf(szText, "jmp "); Print_DIS(8, szText); break;//jmp Jb
+	case 0x70:sprintf_s(szText, "jo "); Print_DIS(8, szText); break;//jo Jb
+	case 0x71:sprintf_s(szText, "jno "); Print_DIS(8, szText); break;//jno Jb
+	case 0x72:sprintf_s(szText, "jb "); Print_DIS(8, szText); break;//jb Jb
+	case 0x73:sprintf_s(szText, "jnb "); Print_DIS(8, szText); break;//jnb Jb
+	case 0x74:sprintf_s(szText, "jz "); Print_DIS(8, szText); break;//jz Jb
+	case 0x75:sprintf_s(szText, "jnz "); Print_DIS(8, szText); break;//jnz Jb
+	case 0x76:sprintf_s(szText, "jbe "); Print_DIS(8, szText); break;//jbe Jb
+	case 0x77:sprintf_s(szText, "ja "); Print_DIS(8, szText); break;//ja Jb
+	case 0x78:sprintf_s(szText, "js "); Print_DIS(8, szText); break;//js Jb
+	case 0x79:sprintf_s(szText, "jns "); Print_DIS(8, szText); break;//jns Jb
+	case 0x7A:sprintf_s(szText, "jp "); Print_DIS(8, szText); break;//jp Jb
+	case 0x7B:sprintf_s(szText, "jnp "); Print_DIS(8, szText); break;//jnp Jb
+	case 0x7C:sprintf_s(szText, "jl "); Print_DIS(8, szText); break;//jl Jb
+	case 0x7D:sprintf_s(szText, "jnl "); Print_DIS(8, szText); break;//jnl Jb
+	case 0x7E:sprintf_s(szText, "jle "); Print_DIS(8, szText); break;//jle Jb
+	case 0x7F:sprintf_s(szText, "jnle "); Print_DIS(8, szText); break;//jnle Jb
+	case 0xE0:sprintf_s(szText, "loopnz "); Print_DIS(8, szText); break;//loopnz Jb
+	case 0xE1:sprintf_s(szText, "loopz "); Print_DIS(8, szText); break;//loopz Jb
+	case 0xE2:sprintf_s(szText, "loop "); Print_DIS(8, szText); break;//loop Jb
+	case 0xEB:sprintf_s(szText, "jmp "); Print_DIS(8, szText); break;//jmp Jb
 	/* Opcode + 32bit DIS */
-	case 0xA0:sprintf(szText, "mov "); sprintf(szText, "%sal, ", szText); Size_directive(8, szText); sprintf(szText, "%s[", szText); Print_DIS(32, szText); sprintf(szText, "%s]", szText); break;//mov AL, Ob
-	case 0xA1:sprintf(szText, "mov "); sprintf(szText, "%seax, ", szText); Size_directive(32, szText); sprintf(szText, "%s[", szText); Print_DIS(32, szText); sprintf(szText, "%s]", szText); break;//mov eAX, Ov
-	case 0xA2:sprintf(szText, "mov "); Size_directive(8, szText); sprintf(szText, "%s[", szText); Print_DIS(32, szText); sprintf(szText, "%s]", szText); sprintf(szText, "%s, al", szText); break;//mov Ob, AL
-	case 0xA3:sprintf(szText, "mov "); Size_directive(32, szText); sprintf(szText, "%s[", szText); Print_DIS(32, szText); sprintf(szText, "%s]", szText); sprintf(szText, "%s, eax", szText); break;//mov Ov, eAX
-	case 0xE8:sprintf(szText, "call "); Print_DIS(32, szText); break;//call Jz
-	case 0xE9:sprintf(szText, "jmp "); Print_DIS(32, szText); break;//jmp Jz
+	case 0xA0:sprintf_s(szText, "mov "); sprintf_s(szText, "%sal, ", szText); Size_directive(8, szText); sprintf_s(szText, "%s[", szText); Print_DIS(32, szText); sprintf_s(szText, "%s]", szText); break;//mov AL, Ob
+	case 0xA1:sprintf_s(szText, "mov "); sprintf_s(szText, "%seax, ", szText); Size_directive(32, szText); sprintf_s(szText, "%s[", szText); Print_DIS(32, szText); sprintf_s(szText, "%s]", szText); break;//mov eAX, Ov
+	case 0xA2:sprintf_s(szText, "mov "); Size_directive(8, szText); sprintf_s(szText, "%s[", szText); Print_DIS(32, szText); sprintf_s(szText, "%s]", szText); sprintf_s(szText, "%s, al", szText); break;//mov Ob, AL
+	case 0xA3:sprintf_s(szText, "mov "); Size_directive(32, szText); sprintf_s(szText, "%s[", szText); Print_DIS(32, szText); sprintf_s(szText, "%s]", szText); sprintf_s(szText, "%s, eax", szText); break;//mov Ov, eAX
+	case 0xE8:sprintf_s(szText, "call "); Print_DIS(32, szText); break;//call Jz
+	case 0xE9:sprintf_s(szText, "jmp "); Print_DIS(32, szText); break;//jmp Jz
 	/* Opcode */
-	case 0x06:sprintf(szText, "push es"); break;
-	case 0x07:sprintf(szText, "pop es"); break;
-	case 0x0E:sprintf(szText, "push ss"); break;
-	case 0x16:sprintf(szText, "push ss"); break;
-	case 0x17:sprintf(szText, "pop ss"); break;
-	case 0x1E:sprintf(szText, "push ds"); break;
-	case 0x1F:sprintf(szText, "pop ds"); break;
-	case 0x27:sprintf(szText, "daa"); break;
-	case 0x2F:sprintf(szText, "das"); break;
-	case 0x37:sprintf(szText, "aaa"); break;
-	case 0x3F:sprintf(szText, "aas"); break;
-	case 0x40:(g_is.Prefix_OpcodeSize)?sprintf(szText, "inc ax"):sprintf(szText, "inc eax"); break;
-	case 0x41:(g_is.Prefix_OpcodeSize)?sprintf(szText, "inc cx"):sprintf(szText, "inc ecx"); break;
-	case 0x42:(g_is.Prefix_OpcodeSize)?sprintf(szText, "inc dx"):sprintf(szText, "inc edx"); break;
-	case 0x43:(g_is.Prefix_OpcodeSize)?sprintf(szText, "inc bx"):sprintf(szText, "inc ebx"); break;
-	case 0x44:(g_is.Prefix_OpcodeSize)?sprintf(szText, "inc sp"):sprintf(szText, "inc esp"); break;
-	case 0x45:(g_is.Prefix_OpcodeSize)?sprintf(szText, "inc bp"):sprintf(szText, "inc ebp"); break;
-	case 0x46:(g_is.Prefix_OpcodeSize)?sprintf(szText, "inc si"):sprintf(szText, "inc esi"); break;
-	case 0x47:(g_is.Prefix_OpcodeSize)?sprintf(szText, "inc di"):sprintf(szText, "inc edi"); break;
-	case 0x48:(g_is.Prefix_OpcodeSize)?sprintf(szText, "dex ax"):sprintf(szText, "dec eax"); break;
-	case 0x49:(g_is.Prefix_OpcodeSize)?sprintf(szText, "dex cx"):sprintf(szText, "dec ecx"); break;
-	case 0x4A:(g_is.Prefix_OpcodeSize)?sprintf(szText, "dex dx"):sprintf(szText, "dec edx"); break;
-	case 0x4B:(g_is.Prefix_OpcodeSize)?sprintf(szText, "dex bx"):sprintf(szText, "dec ebx"); break;
-	case 0x4C:(g_is.Prefix_OpcodeSize)?sprintf(szText, "dex sp"):sprintf(szText, "dec esp"); break;
-	case 0x4D:(g_is.Prefix_OpcodeSize)?sprintf(szText, "dex bp"):sprintf(szText, "dec ebp"); break;
-	case 0x4E:(g_is.Prefix_OpcodeSize)?sprintf(szText, "dex si"):sprintf(szText, "dec esi"); break;
-	case 0x4F:(g_is.Prefix_OpcodeSize)?sprintf(szText, "dex di"):sprintf(szText, "dec edi"); break;
-	case 0x50:(g_is.Prefix_OpcodeSize)?sprintf(szText, "push ax"):sprintf(szText, "push eax"); break;
-	case 0x51:(g_is.Prefix_OpcodeSize)?sprintf(szText, "push cx"):sprintf(szText, "push ecx"); break;
-	case 0x52:(g_is.Prefix_OpcodeSize)?sprintf(szText, "push dx"):sprintf(szText, "push edx"); break;
-	case 0x53:(g_is.Prefix_OpcodeSize)?sprintf(szText, "push bx"):sprintf(szText, "push ebx"); break;
-	case 0x54:(g_is.Prefix_OpcodeSize)?sprintf(szText, "push sp"):sprintf(szText, "push esp"); break;
-	case 0x55:(g_is.Prefix_OpcodeSize)?sprintf(szText, "push bp"):sprintf(szText, "push ebp"); break;
-	case 0x56:(g_is.Prefix_OpcodeSize)?sprintf(szText, "push si"):sprintf(szText, "push esi"); break;
-	case 0x57:(g_is.Prefix_OpcodeSize)?sprintf(szText, "push di"):sprintf(szText, "push edi"); break;
-	case 0x58:(g_is.Prefix_OpcodeSize)?sprintf(szText, "pop ax"):sprintf(szText, "pop eax"); break;
-	case 0x59:(g_is.Prefix_OpcodeSize)?sprintf(szText, "pop cx"):sprintf(szText, "pop ecx"); break;
-	case 0x5A:(g_is.Prefix_OpcodeSize)?sprintf(szText, "pop dx"):sprintf(szText, "pop edx"); break;
-	case 0x5B:(g_is.Prefix_OpcodeSize)?sprintf(szText, "pop bx"):sprintf(szText, "pop ebx"); break;
-	case 0x5C:(g_is.Prefix_OpcodeSize)?sprintf(szText, "pop sp"):sprintf(szText, "pop esp"); break;
-	case 0x5D:(g_is.Prefix_OpcodeSize)?sprintf(szText, "pop bp"):sprintf(szText, "pop ebp"); break;
-	case 0x5E:(g_is.Prefix_OpcodeSize)?sprintf(szText, "pop si"):sprintf(szText, "pop esi"); break;
-	case 0x5F:(g_is.Prefix_OpcodeSize)?sprintf(szText, "pop di"):sprintf(szText, "pop edi"); break;
-	case 0x60:sprintf(szText, "pusha"); break;
-	case 0x61:sprintf(szText, "popa"); break;
-	case 0x6C:sprintf(szText, "insb "); Size_directive(8, szText); (g_is.Prefix_AddressSize)?sprintf(szText, "%s[di], dx", szText):sprintf(szText, "%s[edi], dx", szText); break;
-	case 0x6D:sprintf(szText, "insw "); Size_directive(16, szText); (g_is.Prefix_AddressSize)?sprintf(szText, "%s[di], dx", szText):sprintf(szText, "%s[edi], dx", szText); break;
-	case 0x6E:sprintf(szText, "outsb "); sprintf(szText, "%sdx, ", szText); Size_directive(8, szText); (g_is.Prefix_AddressSize)?sprintf(szText, "%s[di]", szText):sprintf(szText, "%s[edi]", szText); break;
-	case 0x6F:sprintf(szText, "outsw "); sprintf(szText, "%sdx, ", szText); Size_directive(16, szText); (g_is.Prefix_AddressSize)?sprintf(szText, "%s[di]", szText):sprintf(szText, "%s[edi]", szText); break;
-	case 0x90:sprintf(szText, "nop"); break;
-	case 0x91:(g_is.Prefix_OpcodeSize)?sprintf(szText, "xchg ax, cx"):sprintf(szText, "xchg eax, ecx"); break;
-	case 0x92:(g_is.Prefix_OpcodeSize)?sprintf(szText, "xchg ax, dx"):sprintf(szText, "xchg eax, edx"); break;
-	case 0x93:(g_is.Prefix_OpcodeSize)?sprintf(szText, "xchg ax, bx"):sprintf(szText, "xchg eax, ebx"); break;
-	case 0x94:(g_is.Prefix_OpcodeSize)?sprintf(szText, "xchg ax, sp"):sprintf(szText, "xchg eax, esp"); break;
-	case 0x95:(g_is.Prefix_OpcodeSize)?sprintf(szText, "xchg ax, bp"):sprintf(szText, "xchg eax, ebp"); break;
-	case 0x96:(g_is.Prefix_OpcodeSize)?sprintf(szText, "xchg ax, si"):sprintf(szText, "xchg eax, esi"); break;
-	case 0x97:(g_is.Prefix_OpcodeSize)?sprintf(szText, "xchg ax, di"):sprintf(szText, "xchg eax, edi"); break;
-	case 0x98:sprintf(szText, "cbw"); break;
-	case 0x99:sprintf(szText, "cwd"); break;
-	case 0x9B:sprintf(szText, "wait"); break;
-	case 0x9C:sprintf(szText, "pushfd"); break;
-	case 0x9D:sprintf(szText, "popfd"); break;
-	case 0x9E:sprintf(szText, "sahf"); break;
-	case 0x9F:sprintf(szText, "lahf"); break;
-	case 0xA4:sprintf(szText, "movsb Xb, Yb"); Size_directive(8, szText); (g_is.Prefix_AddressSize)?sprintf(szText, "%s[si],", szText):sprintf(szText, "%s[esi], ", szText); Size_directive(8, szText); (g_is.Prefix_AddressSize)?sprintf(szText, "%s[di]", szText):sprintf(szText, "%s[edi]", szText); break;
-	case 0xA5:sprintf(szText, "movsw Xv, Yv"); Size_directive(32, szText); (g_is. Prefix_AddressSize)?sprintf(szText, "%s[si],", szText):sprintf(szText, "%s[esi], ", szText); Size_directive(32, szText); (g_is.Prefix_AddressSize)?sprintf(szText, "%s[di]", szText):sprintf(szText, "%s[edi]", szText); break;
-	case 0xA6:sprintf(szText, "cmpsb Xb, Yb"); Size_directive(8, szText); (g_is. Prefix_AddressSize)?sprintf(szText, "%s[si],", szText):sprintf(szText, "%s[esi], ", szText); Size_directive(8, szText); (g_is.Prefix_AddressSize)?sprintf(szText, "%s[di]", szText):sprintf(szText, "%s[edi]", szText); break;
-	case 0xA7:sprintf(szText, "cmpsw Xv, Yv"); Size_directive(32, szText); (g_is. Prefix_AddressSize)?sprintf(szText, "%s[si],", szText):sprintf(szText, "%s[esi], ", szText); Size_directive(32, szText); (g_is.Prefix_AddressSize)?sprintf(szText, "%s[di]", szText):sprintf(szText, "%s[edi]", szText); break;
-	case 0xAA:sprintf(szText, "stosb "); Size_directive(8, szText); (g_is. Prefix_AddressSize)?sprintf(szText, "%s[di]", szText):sprintf(szText, "%s[edi]", szText); break;
-	case 0xAB:sprintf(szText, "stosw "); Size_directive(32, szText); (g_is. Prefix_AddressSize)?sprintf(szText, "%s[di]", szText):sprintf(szText, "%s[edi]", szText); break;
-	case 0xAC:sprintf(szText, "lobsb "); Size_directive(8, szText); (g_is. Prefix_AddressSize)?sprintf(szText, "%s[si]", szText):sprintf(szText, "%s[esi]", szText); break;
-	case 0xAD:sprintf(szText, "lobsw "); Size_directive(32, szText); (g_is. Prefix_AddressSize)?sprintf(szText, "%s[si]", szText):sprintf(szText, "%s[esi]", szText); break;
-	case 0xAE:sprintf(szText, "scasb "); Size_directive(8, szText); (g_is. Prefix_AddressSize)?sprintf(szText, "%s[di]", szText):sprintf(szText, "%s[edi]", szText); break;
-	case 0xAF:sprintf(szText, "scasw "); Size_directive(32, szText); (g_is. Prefix_AddressSize)?sprintf(szText, "%s[di]", szText):sprintf(szText, "%s[edi]", szText); break;
-	case 0xC3:sprintf(szText, "ret"); break;
-	case 0xC9:sprintf(szText, "leave"); break;
-	case 0xCB:sprintf(szText, "retf"); break;
-	case 0xCC:sprintf(szText, "int 3"); break;
-	case 0xCE:sprintf(szText, "info"); break;
-	case 0xCF:sprintf(szText, "iret"); break;
-	case 0xD6:sprintf(szText, "salc"); break;
-	case 0xD7:sprintf(szText, "xlat"); break;
-	case 0xEC:sprintf(szText, "in al, dx"); break;
-	case 0xED:(g_is.Prefix_OpcodeSize)?sprintf(szText, "in ax, ex"):sprintf(szText, "in eax, ex"); break;
-	case 0xEE:sprintf(szText, "out dx, al"); break;
-	case 0xEF:(g_is.Prefix_OpcodeSize)?sprintf(szText, "out dx, ax"):sprintf(szText, "out dx, eax"); break;
-	case 0xF1:sprintf(szText, "int 1"); break;
-	case 0xF4:sprintf(szText, "htl"); break;
-	case 0xF5:sprintf(szText, "cmc"); break;
-	case 0xF8:sprintf(szText, "clc"); break;
-	case 0xF9:sprintf(szText, "stc"); break;
-	case 0xFA:sprintf(szText, "cli"); break;
-	case 0xFB:sprintf(szText, "sti"); break;
-	case 0xFC:sprintf(szText, "cld"); break;
-	case 0xFD:sprintf(szText, "std"); break;
+	case 0x06:sprintf_s(szText, "push es"); break;
+	case 0x07:sprintf_s(szText, "pop es"); break;
+	case 0x0E:sprintf_s(szText, "push ss"); break;
+	case 0x16:sprintf_s(szText, "push ss"); break;
+	case 0x17:sprintf_s(szText, "pop ss"); break;
+	case 0x1E:sprintf_s(szText, "push ds"); break;
+	case 0x1F:sprintf_s(szText, "pop ds"); break;
+	case 0x27:sprintf_s(szText, "daa"); break;
+	case 0x2F:sprintf_s(szText, "das"); break;
+	case 0x37:sprintf_s(szText, "aaa"); break;
+	case 0x3F:sprintf_s(szText, "aas"); break;
+	case 0x40:(g_is.Prefix_OpcodeSize)?sprintf_s(szText, "inc ax"):sprintf_s(szText, "inc eax"); break;
+	case 0x41:(g_is.Prefix_OpcodeSize)?sprintf_s(szText, "inc cx"):sprintf_s(szText, "inc ecx"); break;
+	case 0x42:(g_is.Prefix_OpcodeSize)?sprintf_s(szText, "inc dx"):sprintf_s(szText, "inc edx"); break;
+	case 0x43:(g_is.Prefix_OpcodeSize)?sprintf_s(szText, "inc bx"):sprintf_s(szText, "inc ebx"); break;
+	case 0x44:(g_is.Prefix_OpcodeSize)?sprintf_s(szText, "inc sp"):sprintf_s(szText, "inc esp"); break;
+	case 0x45:(g_is.Prefix_OpcodeSize)?sprintf_s(szText, "inc bp"):sprintf_s(szText, "inc ebp"); break;
+	case 0x46:(g_is.Prefix_OpcodeSize)?sprintf_s(szText, "inc si"):sprintf_s(szText, "inc esi"); break;
+	case 0x47:(g_is.Prefix_OpcodeSize)?sprintf_s(szText, "inc di"):sprintf_s(szText, "inc edi"); break;
+	case 0x48:(g_is.Prefix_OpcodeSize)?sprintf_s(szText, "dex ax"):sprintf_s(szText, "dec eax"); break;
+	case 0x49:(g_is.Prefix_OpcodeSize)?sprintf_s(szText, "dex cx"):sprintf_s(szText, "dec ecx"); break;
+	case 0x4A:(g_is.Prefix_OpcodeSize)?sprintf_s(szText, "dex dx"):sprintf_s(szText, "dec edx"); break;
+	case 0x4B:(g_is.Prefix_OpcodeSize)?sprintf_s(szText, "dex bx"):sprintf_s(szText, "dec ebx"); break;
+	case 0x4C:(g_is.Prefix_OpcodeSize)?sprintf_s(szText, "dex sp"):sprintf_s(szText, "dec esp"); break;
+	case 0x4D:(g_is.Prefix_OpcodeSize)?sprintf_s(szText, "dex bp"):sprintf_s(szText, "dec ebp"); break;
+	case 0x4E:(g_is.Prefix_OpcodeSize)?sprintf_s(szText, "dex si"):sprintf_s(szText, "dec esi"); break;
+	case 0x4F:(g_is.Prefix_OpcodeSize)?sprintf_s(szText, "dex di"):sprintf_s(szText, "dec edi"); break;
+	case 0x50:(g_is.Prefix_OpcodeSize)?sprintf_s(szText, "push ax"):sprintf_s(szText, "push eax"); break;
+	case 0x51:(g_is.Prefix_OpcodeSize)?sprintf_s(szText, "push cx"):sprintf_s(szText, "push ecx"); break;
+	case 0x52:(g_is.Prefix_OpcodeSize)?sprintf_s(szText, "push dx"):sprintf_s(szText, "push edx"); break;
+	case 0x53:(g_is.Prefix_OpcodeSize)?sprintf_s(szText, "push bx"):sprintf_s(szText, "push ebx"); break;
+	case 0x54:(g_is.Prefix_OpcodeSize)?sprintf_s(szText, "push sp"):sprintf_s(szText, "push esp"); break;
+	case 0x55:(g_is.Prefix_OpcodeSize)?sprintf_s(szText, "push bp"):sprintf_s(szText, "push ebp"); break;
+	case 0x56:(g_is.Prefix_OpcodeSize)?sprintf_s(szText, "push si"):sprintf_s(szText, "push esi"); break;
+	case 0x57:(g_is.Prefix_OpcodeSize)?sprintf_s(szText, "push di"):sprintf_s(szText, "push edi"); break;
+	case 0x58:(g_is.Prefix_OpcodeSize)?sprintf_s(szText, "pop ax"):sprintf_s(szText, "pop eax"); break;
+	case 0x59:(g_is.Prefix_OpcodeSize)?sprintf_s(szText, "pop cx"):sprintf_s(szText, "pop ecx"); break;
+	case 0x5A:(g_is.Prefix_OpcodeSize)?sprintf_s(szText, "pop dx"):sprintf_s(szText, "pop edx"); break;
+	case 0x5B:(g_is.Prefix_OpcodeSize)?sprintf_s(szText, "pop bx"):sprintf_s(szText, "pop ebx"); break;
+	case 0x5C:(g_is.Prefix_OpcodeSize)?sprintf_s(szText, "pop sp"):sprintf_s(szText, "pop esp"); break;
+	case 0x5D:(g_is.Prefix_OpcodeSize)?sprintf_s(szText, "pop bp"):sprintf_s(szText, "pop ebp"); break;
+	case 0x5E:(g_is.Prefix_OpcodeSize)?sprintf_s(szText, "pop si"):sprintf_s(szText, "pop esi"); break;
+	case 0x5F:(g_is.Prefix_OpcodeSize)?sprintf_s(szText, "pop di"):sprintf_s(szText, "pop edi"); break;
+	case 0x60:sprintf_s(szText, "pusha"); break;
+	case 0x61:sprintf_s(szText, "popa"); break;
+	case 0x6C:sprintf_s(szText, "insb "); Size_directive(8, szText); (g_is.Prefix_AddressSize)?sprintf_s(szText, "%s[di], dx", szText):sprintf_s(szText, "%s[edi], dx", szText); break;
+	case 0x6D:sprintf_s(szText, "insw "); Size_directive(16, szText); (g_is.Prefix_AddressSize)?sprintf_s(szText, "%s[di], dx", szText):sprintf_s(szText, "%s[edi], dx", szText); break;
+	case 0x6E:sprintf_s(szText, "outsb "); sprintf_s(szText, "%sdx, ", szText); Size_directive(8, szText); (g_is.Prefix_AddressSize)?sprintf_s(szText, "%s[di]", szText):sprintf_s(szText, "%s[edi]", szText); break;
+	case 0x6F:sprintf_s(szText, "outsw "); sprintf_s(szText, "%sdx, ", szText); Size_directive(16, szText); (g_is.Prefix_AddressSize)?sprintf_s(szText, "%s[di]", szText):sprintf_s(szText, "%s[edi]", szText); break;
+	case 0x90:sprintf_s(szText, "nop"); break;
+	case 0x91:(g_is.Prefix_OpcodeSize)?sprintf_s(szText, "xchg ax, cx"):sprintf_s(szText, "xchg eax, ecx"); break;
+	case 0x92:(g_is.Prefix_OpcodeSize)?sprintf_s(szText, "xchg ax, dx"):sprintf_s(szText, "xchg eax, edx"); break;
+	case 0x93:(g_is.Prefix_OpcodeSize)?sprintf_s(szText, "xchg ax, bx"):sprintf_s(szText, "xchg eax, ebx"); break;
+	case 0x94:(g_is.Prefix_OpcodeSize)?sprintf_s(szText, "xchg ax, sp"):sprintf_s(szText, "xchg eax, esp"); break;
+	case 0x95:(g_is.Prefix_OpcodeSize)?sprintf_s(szText, "xchg ax, bp"):sprintf_s(szText, "xchg eax, ebp"); break;
+	case 0x96:(g_is.Prefix_OpcodeSize)?sprintf_s(szText, "xchg ax, si"):sprintf_s(szText, "xchg eax, esi"); break;
+	case 0x97:(g_is.Prefix_OpcodeSize)?sprintf_s(szText, "xchg ax, di"):sprintf_s(szText, "xchg eax, edi"); break;
+	case 0x98:sprintf_s(szText, "cbw"); break;
+	case 0x99:sprintf_s(szText, "cwd"); break;
+	case 0x9B:sprintf_s(szText, "wait"); break;
+	case 0x9C:sprintf_s(szText, "pushfd"); break;
+	case 0x9D:sprintf_s(szText, "popfd"); break;
+	case 0x9E:sprintf_s(szText, "sahf"); break;
+	case 0x9F:sprintf_s(szText, "lahf"); break;
+	case 0xA4:sprintf_s(szText, "movsb Xb, Yb"); Size_directive(8, szText); (g_is.Prefix_AddressSize)?sprintf_s(szText, "%s[si],", szText):sprintf_s(szText, "%s[esi], ", szText); Size_directive(8, szText); (g_is.Prefix_AddressSize)?sprintf_s(szText, "%s[di]", szText):sprintf_s(szText, "%s[edi]", szText); break;
+	case 0xA5:sprintf_s(szText, "movsw Xv, Yv"); Size_directive(32, szText); (g_is. Prefix_AddressSize)?sprintf_s(szText, "%s[si],", szText):sprintf_s(szText, "%s[esi], ", szText); Size_directive(32, szText); (g_is.Prefix_AddressSize)?sprintf_s(szText, "%s[di]", szText):sprintf_s(szText, "%s[edi]", szText); break;
+	case 0xA6:sprintf_s(szText, "cmpsb Xb, Yb"); Size_directive(8, szText); (g_is. Prefix_AddressSize)?sprintf_s(szText, "%s[si],", szText):sprintf_s(szText, "%s[esi], ", szText); Size_directive(8, szText); (g_is.Prefix_AddressSize)?sprintf_s(szText, "%s[di]", szText):sprintf_s(szText, "%s[edi]", szText); break;
+	case 0xA7:sprintf_s(szText, "cmpsw Xv, Yv"); Size_directive(32, szText); (g_is. Prefix_AddressSize)?sprintf_s(szText, "%s[si],", szText):sprintf_s(szText, "%s[esi], ", szText); Size_directive(32, szText); (g_is.Prefix_AddressSize)?sprintf_s(szText, "%s[di]", szText):sprintf_s(szText, "%s[edi]", szText); break;
+	case 0xAA:sprintf_s(szText, "stosb "); Size_directive(8, szText); (g_is. Prefix_AddressSize)?sprintf_s(szText, "%s[di]", szText):sprintf_s(szText, "%s[edi]", szText); break;
+	case 0xAB:sprintf_s(szText, "stosw "); Size_directive(32, szText); (g_is. Prefix_AddressSize)?sprintf_s(szText, "%s[di]", szText):sprintf_s(szText, "%s[edi]", szText); break;
+	case 0xAC:sprintf_s(szText, "lobsb "); Size_directive(8, szText); (g_is. Prefix_AddressSize)?sprintf_s(szText, "%s[si]", szText):sprintf_s(szText, "%s[esi]", szText); break;
+	case 0xAD:sprintf_s(szText, "lobsw "); Size_directive(32, szText); (g_is. Prefix_AddressSize)?sprintf_s(szText, "%s[si]", szText):sprintf_s(szText, "%s[esi]", szText); break;
+	case 0xAE:sprintf_s(szText, "scasb "); Size_directive(8, szText); (g_is. Prefix_AddressSize)?sprintf_s(szText, "%s[di]", szText):sprintf_s(szText, "%s[edi]", szText); break;
+	case 0xAF:sprintf_s(szText, "scasw "); Size_directive(32, szText); (g_is. Prefix_AddressSize)?sprintf_s(szText, "%s[di]", szText):sprintf_s(szText, "%s[edi]", szText); break;
+	case 0xC3:sprintf_s(szText, "ret"); break;
+	case 0xC9:sprintf_s(szText, "leave"); break;
+	case 0xCB:sprintf_s(szText, "retf"); break;
+	case 0xCC:sprintf_s(szText, "int 3"); break;
+	case 0xCE:sprintf_s(szText, "info"); break;
+	case 0xCF:sprintf_s(szText, "iret"); break;
+	case 0xD6:sprintf_s(szText, "salc"); break;
+	case 0xD7:sprintf_s(szText, "xlat"); break;
+	case 0xEC:sprintf_s(szText, "in al, dx"); break;
+	case 0xED:(g_is.Prefix_OpcodeSize)?sprintf_s(szText, "in ax, ex"):sprintf_s(szText, "in eax, ex"); break;
+	case 0xEE:sprintf_s(szText, "out dx, al"); break;
+	case 0xEF:(g_is.Prefix_OpcodeSize)?sprintf_s(szText, "out dx, ax"):sprintf_s(szText, "out dx, eax"); break;
+	case 0xF1:sprintf_s(szText, "int 1"); break;
+	case 0xF4:sprintf_s(szText, "htl"); break;
+	case 0xF5:sprintf_s(szText, "cmc"); break;
+	case 0xF8:sprintf_s(szText, "clc"); break;
+	case 0xF9:sprintf_s(szText, "stc"); break;
+	case 0xFA:sprintf_s(szText, "cli"); break;
+	case 0xFB:sprintf_s(szText, "sti"); break;
+	case 0xFC:sprintf_s(szText, "cld"); break;
+	case 0xFD:sprintf_s(szText, "std"); break;
 	/* Opcode + MOD(16bit 처리 고정) */
-	case 0x63:sprintf(szText, "arpl "); Print_ModRM(IF_MOD(g_iif), 16, szText); break; //16bit 처리
+	case 0x63:sprintf_s(szText, "arpl "); Print_ModRM(IF_MOD(g_iif), 16, szText); break; //16bit 처리
 	/* Opcode + 32bit DIS + 16bit IMM */
-	case 0x9A:sprintf(szText, "call far "); Print_IMM(16, szText); sprintf(szText, ":"); Print_DIS(32, szText); break;//call Ap
-	case 0xEA:sprintf(szText, "jmp far "); Print_IMM(16, szText); sprintf(szText, ":"); Print_DIS(32, szText); break;//jmp Ap
+	case 0x9A:sprintf_s(szText, "call far "); Print_IMM(16, szText); sprintf_s(szText, ":"); Print_DIS(32, szText); break;//call Ap
+	case 0xEA:sprintf_s(szText, "jmp far "); Print_IMM(16, szText); sprintf_s(szText, ":"); Print_DIS(32, szText); break;//jmp Ap
 	/* float 형, 복잡한 처리... */
 	case 0xD8:
 	case 0xD9:
@@ -919,7 +919,7 @@ void PrintDisassem(CListCtrl* m_list, LVITEM* lItem)		//This Function put string
 	case 0xDD:
 	case 0xDE:
 	case 0xDF:Print_float(IF_OP(g_iif), IF_MOD(g_iif), szText); break;
-	default: sprintf(szText, "???");
+	default: sprintf_s(szText, "???");
 	}
 
 	lItem->pszText=szText;
@@ -1388,28 +1388,82 @@ BOOL Init_Disassemble(const unsigned char* psmBase, const DWORD smSize, CListCtr
 	LVITEM lItem;
 	unsigned int index = 0;
 
+	m_list->DeleteAllItems();
+
 	lItem.mask=LVIF_TEXT;
 	while(smOffset < smSize)	//Offset이 Size보다 무조건 작아야 함.
 	{
-		Reset_iif();
-		smOffset += Disassemble(*(psmBase+smOffset), (unsigned char*)(psmBase+smOffset)) - (psmBase+smOffset);
-
 		lItem.iItem=index;
 		lItem.iSubItem=0;
 		memset(szText, 0, MAX_PATH);
-		sprintf(szText, "0x%05x", smOffset);
+		sprintf_s(szText, "0x%05x", smOffset);
 		lItem.pszText=szText;
 		m_list->InsertItem(&lItem);
 
+		Reset_iif();
+		smOffset += Disassemble(*(psmBase+smOffset), (unsigned char*)(psmBase+smOffset)) - (psmBase+smOffset);
+
 		lItem.iSubItem=1;
 		memset(szText, 0, MAX_PATH);
-		sprintf(szText, "%02x %02x %02x %02x %08x %08x", IF_PRE(g_iif), IF_OP(g_iif), IF_MOD(g_iif), IF_SIB(g_iif), IF_DIS32(g_iif), IF_IMM32(g_iif));
+		sprintf_s(szText, "%02x %02x %02x %02x %08x %08x", IF_PRE(g_iif), IF_OP(g_iif), IF_MOD(g_iif), IF_SIB(g_iif), IF_DIS32(g_iif), IF_IMM32(g_iif));
 		lItem.pszText=szText;
 		m_list->SetItem(&lItem);
 
 		lItem.iSubItem=2;
 		memset(szText, 0, MAX_PATH);
 		PrintDisassem(m_list, &lItem);
+
+		lItem.iSubItem=3;
+		memset(szText, 0, MAX_PATH);
+		sprintf_s(szText, "X");
+		lItem.pszText=szText;
+		m_list->SetItem(&lItem);
+
+		index++;
+	}
+
+	return TRUE;
+}
+
+BOOL Init_Disassemble(const DWORD Base, const DWORD count, CListCtrl* m_list)
+{
+	DWORD smOffset = NULL;
+	BOOL count_switch = FALSE;
+	char szText[MAX_PATH]="";
+	LVITEM lItem;
+	unsigned int index = 0;
+	unsigned char* base_addr = (unsigned char*)Base;
+
+	m_list->DeleteAllItems();
+
+	lItem.mask=LVIF_TEXT;
+	while(index < count)	//Offset이 Size보다 무조건 작아야 함.
+	{
+		lItem.iItem=index;
+		lItem.iSubItem=0;
+		memset(szText, 0, MAX_PATH);
+		sprintf_s(szText, "0x%05x", Base+smOffset);
+		lItem.pszText=szText;
+		m_list->InsertItem(&lItem);
+
+		Reset_iif();
+		smOffset += Disassemble(*(base_addr+smOffset), (unsigned char*)(base_addr+smOffset)) - (base_addr+smOffset);
+
+		lItem.iSubItem=1;
+		memset(szText, 0, MAX_PATH);
+		sprintf_s(szText, "%02x %02x %02x %02x %08x %08x", IF_PRE(g_iif), IF_OP(g_iif), IF_MOD(g_iif), IF_SIB(g_iif), IF_DIS32(g_iif), IF_IMM32(g_iif));
+		lItem.pszText=szText;
+		m_list->SetItem(&lItem);
+
+		lItem.iSubItem=2;
+		memset(szText, 0, MAX_PATH);
+		PrintDisassem(m_list, &lItem);
+
+		lItem.iSubItem=3;
+		memset(szText, 0, MAX_PATH);
+		sprintf_s(szText, "X");
+		lItem.pszText=szText;
+		m_list->SetItem(&lItem);
 
 		index++;
 	}

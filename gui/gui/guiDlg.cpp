@@ -6,6 +6,7 @@
 #include "afxdialogex.h"
 #include "winuser.h"
 #include "PSDlg.h"
+#include "Break_Point.h"
 
 #ifdef _DEBUG
 #define new DEBUG_NEW
@@ -14,6 +15,7 @@
 using namespace std;
 using namespace SFdbg;
 
+Break_Table_Circle g_btc;
 // 응용 프로그램 정보에 사용되는 CAboutDlg 대화 상자입니다.
 
 class CAboutDlg : public CDialogEx
@@ -80,6 +82,10 @@ BEGIN_MESSAGE_MAP(CguiDlg, CDialogEx)
 	ON_BN_CLICKED(IDC_BUTTON3, &CguiDlg::OnBnClickedButton3)
 	ON_WM_CTLCOLOR()
 	ON_BN_CLICKED(IDC_BUTTON4, &CguiDlg::OnBnClickedButton4)
+	ON_BN_CLICKED(IDC_BUTTON5, &CguiDlg::OnBnClickedButton5)
+	ON_NOTIFY(NM_CUSTOMDRAW, IDC_LIST1, &CguiDlg::OnCustomdrawList)
+	ON_BN_CLICKED(IDC_BUTTON7, &CguiDlg::OnBnClickedButton7)
+	ON_BN_CLICKED(IDC_BUTTON8, &CguiDlg::OnBnClickedButton8)
 END_MESSAGE_MAP()
 
 void MakeColumn(CListCtrl* m_list, const char** szText, const unsigned int* nWid, const unsigned int count)
@@ -130,8 +136,8 @@ BOOL CguiDlg::OnInitDialog()
 	SetIcon(m_hIcon, FALSE);		// 작은 아이콘을 설정합니다.
 
 	// TODO: 여기에 추가 초기화 작업을 추가합니다.
-	const char *szText1[]={"Offset","Instruction","Disassemble"};
-	unsigned int nWid1[]={100,300,700};
+	const char *szText1[]={"Offset","Instruction","Disassemble", "Break Point"};
+	unsigned int nWid1[]={100,300,700,0};
 	const char *szText2[]={"Register","Value"};
 	unsigned int nWid2[]={100,400};
 	const char *szText4[]={"TimeStamp", "EAX", "EBX", "ECX", "EDX", "EBP", "ESP", "ESI", "EDI", "EIP", "EFLAGS"};
@@ -139,7 +145,7 @@ BOOL CguiDlg::OnInitDialog()
 	const char *szText5[]={"Address","0x0", "0x4", "0x8", "0xC"};
 	unsigned int nWid5[]={100, 100, 100, 100, 100};
 
-	MakeColumn(&m_list1, szText1, nWid1, 3);
+	MakeColumn(&m_list1, szText1, nWid1, 4);
 	MakeColumn(&m_list2, szText2, nWid2, 2);
 	MakeColumn(&m_list5, szText5, nWid5, 5);
 	MakeColumn(&m_list4, szText4, nWid4, 11);
@@ -213,6 +219,46 @@ void CguiDlg::OnPaint()
 	return hbr;
 }*/
 
+void CguiDlg::OnCustomdrawList(NMHDR* pNMHDR, LRESULT* pResult)
+{
+	LPNMCUSTOMDRAW pNMCD; 
+	pNMCD = reinterpret_cast<LPNMCUSTOMDRAW>( pNMHDR );  
+      
+	*pResult = 0;
+	
+	LPNMLVCUSTOMDRAW lplvcd = (LPNMLVCUSTOMDRAW)pNMHDR;
+	int iRow = (int)lplvcd ->nmcd.dwItemSpec; //행 얻어옴
+	//int nSub = (int)lplvcd->iSubItem; //열 얻어옴
+	switch(lplvcd->nmcd.dwDrawStage)
+	{
+	case CDDS_PREPAINT:
+		*pResult=CDRF_NOTIFYITEMDRAW;
+		break;
+	//텍스트, 색 수정(전체)
+	case CDDS_ITEMPREPAINT:
+		lplvcd->clrText=RGB(0, 0, 0);
+		*pResult=CDRF_NOTIFYSUBITEMDRAW;
+		break;
+	//sub 아이템 수정
+	case CDDS_SUBITEM | CDDS_PREPAINT | CDDS_ITEM:
+		char tempbp[16] = {0};
+		m_list1.GetItemText(iRow, 3, tempbp, 15);
+		if(tempbp[0] == 'O') { // 브레이크 포인트가 설정되어있다면
+			//배경색 설정
+			lplvcd->clrTextBk=RGB(255,255,0);
+			//글자색 설정
+			lplvcd->clrText=RGB(255, 0, 0);
+		} else {				// 브레이크 포인트가 설정되지 않은 경우
+			//배경색 설정
+			lplvcd->clrTextBk=RGB(255,255,255);
+			//글자색 설정
+			lplvcd->clrText=RGB(0, 0, 0);
+		}  
+		*pResult = CDRF_DODEFAULT;  
+		break;
+	}  
+}  
+
 // 사용자가 최소화된 창을 끄는 동안에 커서가 표시되도록 시스템에서
 //  이 함수를 호출합니다.
 HCURSOR CguiDlg::OnQueryDragIcon()
@@ -245,6 +291,10 @@ void CguiDlg::OnLvnItemchangedList1(NMHDR *pNMHDR, LRESULT *pResult)		//Disassem
 {
 	LPNMLISTVIEW pNMLV = reinterpret_cast<LPNMLISTVIEW>(pNMHDR);
 	// TODO: 여기에 컨트롤 알림 처리기 코드를 추가합니다.
+	//NM_LISTVIEW* pNMView = (NM_LISTVIEW*)pNMHDR;
+	//int index = pNMView->iItem;
+	//g_SelectedItem = pNMLV->iItem;
+
 	*pResult = 0;
 }
 
@@ -302,7 +352,7 @@ void CguiDlg::OnBnClickedButton2()
 	psdlg.DoModal();
 }
 
-void CguiDlg::OnBnClickedButton3()
+void CguiDlg::OnBnClickedButton3()			// Step
 {
 	if(g_mydebugger.Get_ExecConfig(0)) {
 		// Single Step
@@ -314,17 +364,92 @@ void CguiDlg::OnBnClickedButton3()
 	}
 }
 
-void CguiDlg::OnBnClickedButton4()
+void CguiDlg::OnBnClickedButton4()			// Run
 {
 	// TODO: 여기에 컨트롤 알림 처리기 코드를 추가합니다.
 	if(g_mydebugger.Get_ExecConfig(0)) {
 		// Single Step
 		g_mydebugger.Set_ExecConfig(2);
 		while(g_mydebugger.Get_ExecConfig(3)) {
-			g_mydebugger.Start_Debug(&m_list1, &m_list2, NULL, &m_list4, &m_list5);
+			if(!g_mydebugger.Start_Debug(&m_list1, &m_list2, NULL, &m_list4, &m_list5))
+				break;
 		}
 	}
 	else {
 		AfxMessageBox("Please Open or Attach Process for Debugging.");
 	}
+}
+
+
+void CguiDlg::OnBnClickedButton5()			// Break Pointer
+{		
+	CString m_liststr;
+	DWORD OEP = 0;			// Important
+	DWORD temp_op = 0;
+	DWORD temp_address = 0;
+
+	if(g_mydebugger.Get_ExecConfig(0)) {
+		// Single Step
+		DWORD g_SelectedItem = m_list1.GetNextItem(-1, LVNI_SELECTED);
+		if(g_SelectedItem<0)
+			AfxMessageBox("Please Select Item");
+		else {
+			DWORD SelectedCount = m_list1.GetSelectedCount();
+			if(SelectedCount == 1) {	// 단일 선택
+				m_liststr = m_list1.GetItemText(g_SelectedItem, 0);
+				if(Search_Circle(&g_btc, g_SelectedItem, &temp_op, &temp_address)) {
+					if(g_mydebugger.Delete_SoftBreakPoint(strtol(m_liststr, NULL, 10) + OEP, &temp_op))	{
+						Delete_Circle(&g_btc, g_SelectedItem);
+						m_list1.SetItem(g_SelectedItem, 3, LVIF_TEXT, "X", NULL, NULL, NULL, NULL, NULL);
+					}
+				} else {
+					if(g_mydebugger.Set_SoftBreakPoint(strtol(m_liststr, NULL, 10) + OEP, &temp_op)) {	//Set
+						Insert_Circle(&g_btc, temp_op, strtol(m_liststr, NULL, 10) + OEP, g_SelectedItem);
+						m_list1.SetItem(g_SelectedItem, 3, LVIF_TEXT, "O", NULL, NULL, NULL, NULL, NULL);
+					}
+					else AfxMessageBox("Break Point Setting Error!");
+				}
+			} else {		// 다중 선택
+				POSITION pos = m_list1.GetFirstSelectedItemPosition();
+				while(pos) {
+					int nindex = m_list1.GetNextSelectedItem(pos);
+					if(Search_Circle(&g_btc, nindex, &temp_op, &temp_address)) {
+						if(g_mydebugger.Delete_SoftBreakPoint(strtol(m_liststr, NULL, 10) + OEP, &temp_op))	{	//Delete
+							Delete_Circle(&g_btc, g_SelectedItem);
+							m_list1.SetItem(nindex, 3, LVIF_TEXT, "X", NULL, NULL, NULL, NULL, NULL);
+						}
+					} else {
+						m_liststr = m_list1.GetItemText(nindex, 0);
+						if(g_mydebugger.Set_SoftBreakPoint(strtol(m_liststr, NULL, 10) + OEP, &temp_op)) {
+							Insert_Circle(&g_btc, temp_op, strtol(m_liststr, NULL, 10) + OEP, nindex);	//Set
+							m_list1.SetItem(nindex, 3, LVIF_TEXT, "O", NULL, NULL, NULL, NULL, NULL);
+						}
+						else { AfxMessageBox("Break Point Setting Error!"); break; }
+					}
+				}
+			}
+		}
+	}
+	else AfxMessageBox("Please Open or Attach Process for Debugging.");
+}
+
+void CguiDlg::OnBnClickedButton7()
+{
+	if(!g_mydebugger.Get_ExecConfig(0)) {
+		g_mydebugger.ResetAll();
+	}
+	m_list1.DeleteAllItems();
+	m_list2.DeleteAllItems();
+	m_list4.DeleteAllItems();
+	m_list5.DeleteAllItems();
+}
+
+
+void CguiDlg::OnBnClickedButton8()
+{
+	// PE Viewer
+	if(g_mydebugger.Get_ExecConfig(0)) {
+		PE_viewer pedlg;
+		pedlg.DoModal();
+	} else AfxMessageBox("Please Open or Attach Process for Debugging.");
 }
