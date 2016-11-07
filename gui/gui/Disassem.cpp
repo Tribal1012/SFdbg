@@ -1470,3 +1470,74 @@ BOOL Init_Disassemble(const DWORD Base, const DWORD count, CListCtrl* m_list)
 
 	return TRUE;
 }
+
+DWORD Assem_Size(const DWORD Base) {
+	DWORD Size = NULL;
+	unsigned char* base_addr = (unsigned char*)Base;
+
+	Reset_iif();
+	Size = Disassemble(*base_addr, base_addr) - base_addr;
+
+	return Size;
+}
+
+void Get_Disassem(PINTEL_INSTRUCTION_FORMAT piif, CListCtrl* m_list, DWORD row, DWORD column) {
+	CString szText = NULL;
+	CString remainder1 = NULL;
+	CString remainder2 = NULL;
+	CString remainder3 = NULL;
+	CString remainder4 = NULL;
+	CString remainder5 = NULL;
+	CString remainder6 = NULL;
+	
+	szText = m_list->GetItemText(row, column);
+	AfxExtractSubString(remainder1, szText, 0, ' ');
+	AfxExtractSubString(remainder2, szText, 1, ' ');
+	AfxExtractSubString(remainder3, szText, 2, ' ');
+	AfxExtractSubString(remainder4, szText, 3, ' ');
+	AfxExtractSubString(remainder5, szText, 4, ' ');
+	AfxExtractSubString(remainder6, szText, 5, ' ');
+
+	piif->Instruction_Prefixes = (unsigned char)strtoul(remainder1, NULL, 16);
+	piif->Opcode.One_ByteOpcode = (unsigned char)strtoul(remainder2, NULL, 16);
+	piif->ModRM = (unsigned char)strtoul(remainder3, NULL, 16);
+	piif->SIB = (unsigned char)strtoul(remainder4, NULL, 16);
+	piif->Displacement.DWordDisplacement = strtoul(remainder5, NULL, 16);
+	piif->Immediate.DWordImmediate = strtoul(remainder6, NULL, 16);
+}
+
+BOOL Check_Disassem(BYTE Opcode, CONTEXT *context, PINTEL_INSTRUCTION_FORMAT piff, PDWORD Address) {
+	switch(Opcode) {
+	//case 0xC2: //retn lw
+	//case 0xC3: //ret
+	//case 0xCA: //*Address = *(PDWORD)context->Esp; break;//retf lw, 프로세스로부터 데이터를 읽어와야 함.
+	case 0xE3: *Address = context->Eip + piff->Immediate.ByteImmediate; break;//jcxz, 조건 추가
+	case 0x70://jo Jb
+	case 0x71://jno Jb
+	case 0x72://jb Jb
+	case 0x73://jnb Jb
+	case 0x74://jz Jb
+	case 0x75://jnz Jb
+	case 0x76://jbe Jb
+	case 0x77://ja Jb
+	case 0x78://js Jb
+	case 0x79://jns Jb
+	case 0x7A://jp Jb
+	case 0x7B://jnp Jb
+	case 0x7C://jl Jb
+	case 0x7D://jnl Jb
+	case 0x7E://jle Jb
+	case 0x7F://jnle Jb
+	case 0xE0://loopnz Jb
+	case 0xE1://loopz Jb
+	case 0xE2://loop Jb
+	case 0xEB: *Address = context->Eip + piff->Immediate.WordImmediate; break;//jmp Jb
+	case 0xE8://call Jz
+	case 0xE9: *Address = context->Eip + piff->Displacement.DWordDisplacement; break;//jmp Jz
+	case 0x9A://call Ap
+	case 0xEA: *Address = context->Eip + piff->Displacement.DWordDisplacement + piff->Immediate.WordImmediate; break;//jmp Ap
+	default: return FALSE;
+	}
+
+	return TRUE;
+}

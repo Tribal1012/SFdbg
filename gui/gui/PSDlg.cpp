@@ -90,7 +90,7 @@ void PSDlg::OnBnClickedOk()
 		}
 	}
 	else {
-		AfxMessageBox("It is already running.");
+		AfxMessageBox("It is already running. Please click Refresh Button.");
 	}
 
 	CDialogEx::OnOK();

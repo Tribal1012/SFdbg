@@ -20,4 +20,5 @@ DWORD Table_Count(const PBreak_Table_Circle pbtc);
 BOOL Search_Circle(const PBreak_Table_Circle pbtc, const DWORD value, PDWORD popcode, PDWORD paddress);
 void Delete_Circle(PBreak_Table_Circle pbtc, DWORD offset);
 
+extern Break_Table_Circle g_btc;
 #endif

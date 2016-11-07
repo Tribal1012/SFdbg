@@ -82,6 +82,8 @@ namespace SFdbg {
 		void Set_ExecConfig(int flag);
 		BOOL Get_ExecConfig(int flag);
 		void ResetAll(void);
+		BOOL Check_Eip(DWORD value);
+		DWORD Find_List(CListCtrl* m_list);
 	};
 
 	extern DEBUGGER g_mydebugger;

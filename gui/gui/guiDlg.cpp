@@ -249,10 +249,19 @@ void CguiDlg::OnCustomdrawList(NMHDR* pNMHDR, LRESULT* pResult)
 			//글자색 설정
 			lplvcd->clrText=RGB(255, 0, 0);
 		} else {				// 브레이크 포인트가 설정되지 않은 경우
-			//배경색 설정
-			lplvcd->clrTextBk=RGB(255,255,255);
-			//글자색 설정
-			lplvcd->clrText=RGB(0, 0, 0);
+			memset(tempbp, 0, 16);
+			m_list1.GetItemText(iRow, 0, tempbp, 15);
+			if(g_mydebugger.Check_Eip(strtoul(tempbp, NULL, 16))) {
+				//배경색 설정
+				lplvcd->clrTextBk=RGB(0,0,0);
+				//글자색 설정
+				lplvcd->clrText=RGB(255, 255, 255);
+			} else {
+				//배경색 설정
+				lplvcd->clrTextBk=RGB(255,255,255);
+				//글자색 설정
+				lplvcd->clrText=RGB(0, 0, 0);
+			}
 		}  
 		*pResult = CDRF_DODEFAULT;  
 		break;
@@ -269,14 +278,20 @@ HCURSOR CguiDlg::OnQueryDragIcon()
 //프로그램 종료
 BOOL CguiDlg::OnClose()
 {
+	AfxMessageBox("Bye~!");
 	return TRUE;
 }
 
 //프로그램 종료
 void CguiDlg::OnDestroy()
 {
-	//Destroy_PE_Format();
-	//if(!Destroy_DB()) exit(-1);
+	if(!g_mydebugger.Get_ExecConfig(0)) {
+		g_mydebugger.ResetAll();
+	}
+	m_list1.DeleteAllItems();
+	m_list2.DeleteAllItems();
+	m_list4.DeleteAllItems();
+	m_list5.DeleteAllItems();
 }
 
 
@@ -332,17 +347,18 @@ void CguiDlg::OnBnClickedButton1()
 {
 	// 파일 불러오기 아이콘 및 기능추가
 	TCHAR szFilters[]=_T("실행파일(*.exe)|.exe|모든파일(*.*)|*.*||");
-
-	CFileDialog dlgFile(TRUE,_T("exe"),_T("*.exe"),OFN_FILEMUSTEXIST | OFN_HIDEREADONLY, szFilters);
-	if(dlgFile.DoModal()==IDOK)
-	{
-		CString pathName = dlgFile.GetPathName();
-		CString fileName = dlgFile.GetFileTitle();
-		//불러온 파일의 분석내용을 ListBox에 출력하도록
-		if(!g_mydebugger.Open_Process(fileName, pathName)) exit(-1);
-		//if(!Init_DB()) exit(-1);
-		g_mydebugger.Start_Debug(&m_list1, &m_list2, NULL, &m_list4, &m_list5);
-	}
+	if(!g_mydebugger.Get_ExecConfig(0)) {
+		CFileDialog dlgFile(TRUE,_T("exe"),_T("*.exe"),OFN_FILEMUSTEXIST | OFN_HIDEREADONLY, szFilters);
+		if(dlgFile.DoModal()==IDOK)
+		{
+			CString pathName = dlgFile.GetPathName();
+			CString fileName = dlgFile.GetFileTitle();
+			//불러온 파일의 분석내용을 ListBox에 출력하도록
+			if(!g_mydebugger.Open_Process(fileName, pathName)) exit(-1);
+			//if(!Init_DB()) exit(-1);
+			g_mydebugger.Start_Debug(&m_list1, &m_list2, NULL, &m_list4, &m_list5);
+		}
+	} else AfxMessageBox("It is already running. Please click Refresh Button.");
 }
 
 void CguiDlg::OnBnClickedButton2()
@@ -398,13 +414,13 @@ void CguiDlg::OnBnClickedButton5()			// Break Pointer
 			if(SelectedCount == 1) {	// 단일 선택
 				m_liststr = m_list1.GetItemText(g_SelectedItem, 0);
 				if(Search_Circle(&g_btc, g_SelectedItem, &temp_op, &temp_address)) {
-					if(g_mydebugger.Delete_SoftBreakPoint(strtol(m_liststr, NULL, 10) + OEP, &temp_op))	{
+					if(g_mydebugger.Delete_SoftBreakPoint(strtol(m_liststr, NULL, 16) + OEP, &temp_op))	{
 						Delete_Circle(&g_btc, g_SelectedItem);
 						m_list1.SetItem(g_SelectedItem, 3, LVIF_TEXT, "X", NULL, NULL, NULL, NULL, NULL);
 					}
 				} else {
-					if(g_mydebugger.Set_SoftBreakPoint(strtol(m_liststr, NULL, 10) + OEP, &temp_op)) {	//Set
-						Insert_Circle(&g_btc, temp_op, strtol(m_liststr, NULL, 10) + OEP, g_SelectedItem);
+					if(g_mydebugger.Set_SoftBreakPoint(strtol(m_liststr, NULL, 16) + OEP, &temp_op)) {	//Set
+						Insert_Circle(&g_btc, temp_op, strtol(m_liststr, NULL, 16) + OEP, g_SelectedItem);
 						m_list1.SetItem(g_SelectedItem, 3, LVIF_TEXT, "O", NULL, NULL, NULL, NULL, NULL);
 					}
 					else AfxMessageBox("Break Point Setting Error!");
@@ -414,14 +430,14 @@ void CguiDlg::OnBnClickedButton5()			// Break Pointer
 				while(pos) {
 					int nindex = m_list1.GetNextSelectedItem(pos);
 					if(Search_Circle(&g_btc, nindex, &temp_op, &temp_address)) {
-						if(g_mydebugger.Delete_SoftBreakPoint(strtol(m_liststr, NULL, 10) + OEP, &temp_op))	{	//Delete
+						if(g_mydebugger.Delete_SoftBreakPoint(strtol(m_liststr, NULL, 16) + OEP, &temp_op))	{	//Delete
 							Delete_Circle(&g_btc, g_SelectedItem);
 							m_list1.SetItem(nindex, 3, LVIF_TEXT, "X", NULL, NULL, NULL, NULL, NULL);
 						}
 					} else {
 						m_liststr = m_list1.GetItemText(nindex, 0);
-						if(g_mydebugger.Set_SoftBreakPoint(strtol(m_liststr, NULL, 10) + OEP, &temp_op)) {
-							Insert_Circle(&g_btc, temp_op, strtol(m_liststr, NULL, 10) + OEP, nindex);	//Set
+						if(g_mydebugger.Set_SoftBreakPoint(strtol(m_liststr, NULL, 16) + OEP, &temp_op)) {
+							Insert_Circle(&g_btc, temp_op, strtol(m_liststr, NULL, 16) + OEP, nindex);	//Set
 							m_list1.SetItem(nindex, 3, LVIF_TEXT, "O", NULL, NULL, NULL, NULL, NULL);
 						}
 						else { AfxMessageBox("Break Point Setting Error!"); break; }
@@ -431,11 +447,13 @@ void CguiDlg::OnBnClickedButton5()			// Break Pointer
 		}
 	}
 	else AfxMessageBox("Please Open or Attach Process for Debugging.");
+
+	m_list1.Invalidate(FALSE);			//이거 중요, 이거 안 넣으면 list 다시 그리는 상태 되어야 함
 }
 
 void CguiDlg::OnBnClickedButton7()
 {
-	if(!g_mydebugger.Get_ExecConfig(0)) {
+	if(g_mydebugger.Get_ExecConfig(0)) {
 		g_mydebugger.ResetAll();
 	}
 	m_list1.DeleteAllItems();

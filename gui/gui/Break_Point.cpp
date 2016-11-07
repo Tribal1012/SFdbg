@@ -4,7 +4,7 @@
 Break_Table_Circle g_pbtc;
 
 void Insert_Circle(PBreak_Table_Circle pbtc, DWORD new_opcode, DWORD new_mem_addr, DWORD new_list_offset) {
-	PBreak_Table new_table = (PBreak_Table) malloc(sizeof(Break_Table));
+	PBreak_Table new_table = (PBreak_Table) calloc(sizeof(Break_Table), 1);
 	if(pbtc->header_table == NULL) {
 		pbtc->header_table = new_table;
 		pbtc->tailer_table = new_table;
@@ -56,23 +56,30 @@ BOOL Search_Circle(const PBreak_Table_Circle pbtc, const DWORD value, PDWORD pop
 }
 
 void Delete_Circle(PBreak_Table_Circle pbtc, DWORD offset) {
-	PBreak_Table temp;									// temp table ptr
+	PBreak_Table temp = NULL;									// temp table ptr
 	PBreak_Table Del_table = pbtc->header_table;		// Delete table ptr
-	DWORD i = 0;
+	DWORD i = 0, count;
 
-	for(i=0; i<Table_Count(pbtc); i++) {
+	count = Table_Count(pbtc);
+	for(i=0; i<count; i++) {
 		if(Del_table->list_offset == offset) break;		// Find offset
 		else {
 			temp = Del_table;
 			Del_table = Del_table->next_table;
 		}
 	}
-	temp->next_table = temp->next_table->next_table;	//sorting circle linked list
+	if(temp != NULL)
+		temp->next_table = Del_table->next_table;	//sorting circle linked list
 
 	Del_table->list_offset = NULL;
 	Del_table->mem_addr = NULL;
 	Del_table->opcode = NULL;
 	Del_table->next_table = NULL;		// Zero Set
-
 	free(Del_table);
+	Del_table = NULL;
+
+	if(--count == NULL) {
+		pbtc->header_table = NULL;
+		pbtc->tailer_table = NULL;
+	}
 }

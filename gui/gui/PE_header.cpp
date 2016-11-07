@@ -190,9 +190,6 @@ DWORD Print_OPTIONAL_Header(CListCtrl *pelist, const DWORD row)
 		lItem.iSubItem = column++;
 		memset(szText, 0, 512);
 		switch(line-row) {
-			sprintf(szText, "0x%08x", Value_Table[line-row]);
-			break;
-		case 3:
 		case 6:
 		case 7:
 		case 8:
@@ -202,24 +199,27 @@ DWORD Print_OPTIONAL_Header(CListCtrl *pelist, const DWORD row)
 		case 12:
 		case 13:
 		case 14:
-		case 15:
-		case 16:
-		case 17:
-		case 18:
-		case 19:
-		case 20:
 		case 21:
 		case 22:
 		case 23:
 		case 24:
-		case 25:
-		case 26:
 		case 27:
 		case 28:
 		case 29:
 		case 30:
 		case 31:
 		case 32:
+			sprintf(szText, "0x%08x", Value_Table[line-row]);
+			break;
+		case 3:
+		case 15:
+		case 16:
+		case 17:
+		case 18:
+		case 19:
+		case 20:
+		case 25:
+		case 26:
 			sprintf(szText, "0x%04x", Value_Table[line-row]);
 			break;	
 		case 4:
@@ -398,6 +398,8 @@ BOOL Destroy_PE_Format(void)
         }
     }
     SAFE_FREE(g_pf.psa);
+
+	memset(&g_pf, 0, sizeof(PE_Format));
 
     return TRUE;
 }

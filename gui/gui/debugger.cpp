@@ -5,9 +5,11 @@
 #include "debugger.h"
 #include "PE_header.h"
 #include "Timeless.h"
+#include "Break_Point.h"
 
 time_t time_old, time_now;	//실행시간 측정을 위해 사용
 unsigned int g_tcount=0;
+BOOL g_isstarted, g_disassem;
 
 namespace SFdbg {
 	DEBUGGER g_mydebugger;
@@ -34,7 +36,7 @@ namespace SFdbg {
 	//oepn process
 	BOOL DEBUGGER::Open_Process(CString filename, CString filepath)
 	{
-		ResetAll();
+		//ResetAll();
 		strcpy_s(g_filepath, filepath.GetBuffer(0));	//convert from CString to LPSTR
 		strcpy_s(g_cmdline, filename.GetBuffer(0));
 		memset(g_cmdline, 0, MAX_PATH);
@@ -49,6 +51,8 @@ namespace SFdbg {
 		}
 		g_exec.isopened = TRUE;
 		g_exec.attached = FALSE;
+		g_isstarted = TRUE;
+		g_disassem = TRUE;
 		Init_PE_Format(g_filepath);
 		time(&time_old);		// 실행 시부터 카운트
 		return TRUE;
@@ -61,7 +65,7 @@ namespace SFdbg {
 		DWORD dwSize;
 		int i = 0;
 
-		ResetAll();
+		//ResetAll();
 		pe32.dwSize = sizeof(PROCESSENTRY32);
 		hSnapShot = CreateToolhelp32Snapshot(TH32CS_SNAPALL, NULL);		//Get Process Entry
 		Process32First(hSnapShot, &pe32);
@@ -88,6 +92,8 @@ namespace SFdbg {
 		AfxMessageBox(g_exec.pid_name);		//Print Filename(Success)
 		g_exec.isopened = FALSE;
 		g_exec.attached = TRUE;
+		g_isstarted = TRUE;
+		g_disassem = TRUE;
 
 		return TRUE;
 	}
@@ -268,8 +274,9 @@ namespace SFdbg {
 		DWORD checksize = 0;
 		BOOL ReadWrite_result;
 		BYTE break_opcode = BREAK_POINT;
+		BYTE Opcode_store = 0;
 
-		ReadWrite_result = ReadProcessMemory(hProcess, (LPCVOID)address, opcode, 1, &checksize);
+		ReadWrite_result = ReadProcessMemory(hProcess, (LPCVOID)address, &Opcode_store, 1, &checksize);
 		if((checksize != 1)||(ReadWrite_result != 1))
 		{
 			*opcode = NULL;
@@ -294,6 +301,7 @@ namespace SFdbg {
 	        return FALSE ;
 	    }
 	    FlushInstructionCache(hProcess, mbi.BaseAddress, 1);
+		*opcode = Opcode_store;
 		return TRUE;
 	}
 	//Delete Software BreakPonint
@@ -308,7 +316,7 @@ namespace SFdbg {
 	    {
 	        return FALSE;
 	    }
-		WriteProcessMemory(hProcess, (LPVOID)address, opcode, 1, &checksize);
+		ReadWrite_result = WriteProcessMemory(hProcess, (LPVOID)address, opcode, 1, &checksize);
 		if((checksize != 1)||(ReadWrite_result != 1))
 		{
 			return FALSE;
@@ -348,6 +356,9 @@ namespace SFdbg {
 	//Start Debug
 	BOOL DEBUGGER::Start_Debug(CListCtrl* m_list1, CListCtrl* m_list2, CListBox* m_list3, CListCtrl* m_list4, CListCtrl* m_list5)
 	{
+		DWORD index = 0, temp_op = 0, temp_address = 0;
+		INTEL_INSTRUCTION_FORMAT temp_iif;
+
 		//continue
 		if(g_exec.isrun || g_exec.isstep)
 			ContinueDebugEvent(g_de.dwProcessId, g_de.dwThreadId, DBG_CONTINUE);
@@ -374,11 +385,15 @@ namespace SFdbg {
 			break;
 		//Exit Process
 		case EXIT_PROCESS_DEBUG_EVENT:		//5
-			Destroy_PE_Format();
 			ResetAll();
 			return FALSE;
 		//Occur Debug Exception
 		case EXCEPTION_DEBUG_EVENT:			//1
+			/*memset(&temp_iif, 0, sizeof(INTEL_INSTRUCTION_FORMAT));
+			Get_Disassem(&temp_iif, m_list1, g_mydebugger.Find_List(m_list1), 1);
+			if(Check_Disassem(temp_iif.Opcode.One_ByteOpcode, &g_context, &temp_iif, &temp_address))
+				Init_Disassemble(temp_address, 1000, m_list1);*/
+
 			switch(g_de.u.Exception.ExceptionRecord.ExceptionCode)
 			{
 			//Single Step Execute
@@ -389,9 +404,10 @@ namespace SFdbg {
 				g_mydebugger.View_Register(m_list2, TRUE);					//추가에서 수정으로 변경
 				g_mydebugger.Modify_Stack(m_list5, 0x4);
 				g_mydebugger.Timeless(m_list4);
-				//Init_Disassemble(g_context.Eip-100, 1000, m_list1);
+				if((g_mydebugger.Find_List(m_list1) == -1) && g_exec.isrun == FALSE)
+					Init_Disassemble(g_context.Eip, 1000, m_list1);
 				//input_table(g_context, (time_now-time_old));
-
+				m_list1->Invalidate(FALSE);
 				Set_SingleStep();
 				break;
 			//BreakPonint
@@ -399,14 +415,28 @@ namespace SFdbg {
 				/* BreakPoint */
 				GetThreadContext(hThread, &g_context);
 				time(&time_now);	//현재 시간 카운트
-				g_mydebugger.View_Register(m_list2, TRUE);					//추가에서 수정으로 변경
+				if(!g_isstarted) {
+					g_mydebugger.g_context.Eip -= 1;
+					SetThreadContext(hThread, &g_context);
+					index = g_mydebugger.Find_List(m_list1);					//List 탐색
+					Search_Circle(&g_btc, index, &temp_op, &temp_address);
+					g_mydebugger.Delete_SoftBreakPoint(g_context.Eip, &temp_op);//Break Point 해제
+				}
+				g_mydebugger.View_Register(m_list2, TRUE);
 				g_mydebugger.Modify_Stack(m_list5, 0x4);
 				g_mydebugger.Timeless(m_list4);
-				Init_Disassemble(g_context.Eip, 1000, m_list1);
+				if(g_mydebugger.Find_List(m_list1) == -1)
+					Init_Disassemble(g_context.Eip, 1000, m_list1);
+				//if(g_disassem) ;
 				//input_table(g_context, (time_now-time_old));
-
+				m_list1->Invalidate(FALSE);
 				Set_SingleStep();
 				g_exec.isrun = FALSE;
+				//if(!g_isstarted) g_mydebugger.Set_SoftBreakPoint(g_context.Eip, &temp_op);	// Break Point 추가
+				if(g_isstarted || g_disassem) {
+					g_isstarted = FALSE;
+					g_disassem = FALSE;
+				}
 				break;
 			default:
 				break;
@@ -451,6 +481,26 @@ namespace SFdbg {
 		if(g_exec.isopened) {
 			CloseHandle(pi.hProcess);
 		}
+		Destroy_PE_Format();
 		memset(&g_mydebugger, 0, sizeof(DEBUGGER));
+		g_tcount = 0;
+	}
+
+	BOOL DEBUGGER::Check_Eip(DWORD value) {
+		if(value == g_context.Eip) {
+			return TRUE;
+		} else {
+			return FALSE;
+		}
+	}
+
+	DWORD DEBUGGER::Find_List(CListCtrl* m_list) {
+		LVFINDINFO lfi;
+		char szText[512] = {0};
+		
+		lfi.flags = LVFI_STRING;
+		sprintf(szText, "0x%08x", g_context.Eip);			//조금만 바꾸면 유용하게 사용가능
+		lfi.psz = szText;
+		return m_list->FindItem(&lfi, -1);
 	}
 }
