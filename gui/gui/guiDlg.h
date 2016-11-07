@@ -58,4 +58,9 @@ public:
 	CListBox m_list3;
 	CListCtrl m_list4;
 	CListCtrl m_list5;
+	virtual BOOL PreTranslateMessage(MSG* pMsg);
+	HACCEL m_hAccel;
+	afx_msg void OnAccel2();
+	afx_msg void OnAccel7();
+	afx_msg void OnAccel9();
 };

@@ -86,6 +86,9 @@ BEGIN_MESSAGE_MAP(CguiDlg, CDialogEx)
 	ON_NOTIFY(NM_CUSTOMDRAW, IDC_LIST1, &CguiDlg::OnCustomdrawList)
 	ON_BN_CLICKED(IDC_BUTTON7, &CguiDlg::OnBnClickedButton7)
 	ON_BN_CLICKED(IDC_BUTTON8, &CguiDlg::OnBnClickedButton8)
+	ON_COMMAND(IDR_ACCEL2, &CguiDlg::OnAccel2)
+	ON_COMMAND(IDR_ACCEL7, &CguiDlg::OnAccel7)
+	ON_COMMAND(IDR_ACCEL9, &CguiDlg::OnAccel9)
 END_MESSAGE_MAP()
 
 void MakeColumn(CListCtrl* m_list, const char** szText, const unsigned int* nWid, const unsigned int count)
@@ -128,7 +131,8 @@ BOOL CguiDlg::OnInitDialog()
 			pSysMenu->AppendMenu(MF_STRING, IDM_ABOUTBOX, strAboutMenu);
 		}
 	}
-	//SetBackgroundColor(RGB(0,0,0)); 배경색 검은색.....리스트박스, 도구들은 색안바뀜
+	
+	m_hAccel = ::LoadAccelerators(AfxGetInstanceHandle(),MAKEINTRESOURCE(IDR_ACCELERATOR1));
 
 	// 이 대화 상자의 아이콘을 설정합니다. 응용 프로그램의 주 창이 대화 상자가 아닐 경우에는
 	//  프레임워크가 이 작업을 자동으로 수행합니다.
@@ -470,4 +474,38 @@ void CguiDlg::OnBnClickedButton8()
 		PE_viewer pedlg;
 		pedlg.DoModal();
 	} else AfxMessageBox("Please Open or Attach Process for Debugging.");
+}
+
+
+BOOL CguiDlg::PreTranslateMessage(MSG* pMsg)
+{
+	// TODO: 여기에 특수화된 코드를 추가 및/또는 기본 클래스를 호출합니다.
+	if(m_hAccel != NULL){
+		if(TranslateAccelerator(m_hWnd, m_hAccel, pMsg)){
+			return TRUE;
+		}
+	}
+
+	return CDialogEx::PreTranslateMessage(pMsg);
+}
+
+
+void CguiDlg::OnAccel2()//단축키 F2
+{
+	// TODO: 여기에 명령 처리기 코드를 추가합니다.
+	OnBnClickedButton5();
+}
+
+
+void CguiDlg::OnAccel7()//단축키 F7
+{
+	// TODO: 여기에 명령 처리기 코드를 추가합니다.
+	OnBnClickedButton3();
+}
+
+
+void CguiDlg::OnAccel9()//단축키 F9
+{
+	// TODO: 여기에 명령 처리기 코드를 추가합니다.
+	OnBnClickedButton4();
 }
